@@ -1,10 +1,12 @@
 Using Perl 6 Native types & NativeCall
 -------------------------------------
 
-Lib::PDF - A library of optimised PDF functions
+A quick look at Lib::PDF - low-level PDF functions
 - PDF processing requires 'bit-crunching'
 - Perl 5
-  - only has strings (realistically) + vec()
+  - implemented using strings and vec()
+  - arrays are inefficient for handling binary data
+  - other alternative is C coding + XS
 - Perl6
   - is expressive, but (c2017) not fast
   - has built in native-types and C interface
@@ -29,9 +31,9 @@ A Perl 5 example (from PDF::API2)
     } elsif($filter==4) {
     # ...
 ```
-
+Generally:
 - arrays aren't used much (high overheads)
-- mostly uses pack/unpack to marshall to binary strings
+- uses pack/unpack to marshal to binary strings
 - `vec` is used for bit-level manipulation
 - PDF data tends to be byte or word orientated
 
@@ -39,7 +41,7 @@ A Perl 5 example (from PDF::API2)
 
 Perl 6 has Native Types
 ------
-This is the same, coded in Perl 6:
+Similar, coded in Perl 6:
 ```
     my uint8 @out;
     # ...
@@ -56,14 +58,14 @@ This is the same, coded in Perl 6:
         
     # ...
 ```
-- `@out` is a compact array of unsigned bytes
+- `@out` is a compact VM array of unsigned bytes
 - it can mostly be used like an Int array
 
 ---
 
 Perl 6 Gradual Typing
 -----
-Variables are untyped (type Any) by default:
+Types are optional:
 ```
 my $v = 37 + 5;
 $v = "hi";
@@ -88,7 +90,7 @@ $i += 42;
 say $i; # 34
 ```
 
-These are distinguished by their lowercase names:
+Native types have lowercase names:
 
 `int`, `uint`, `int8`, `int16`, `num` (float), `str`, ...etc
 
@@ -108,8 +110,6 @@ say @matrix[1;2]; # 5
 Buf's and Blobs
 ---------------
 
-One more thing to mention are Buf's and Blobs.
-
 These are typically used to read and write binary data.
 
 - They may be used to create and save Unicode strings in different encodings (utf-8, utf-16, etc).
@@ -118,8 +118,8 @@ These are typically used to read and write binary data.
 
 ```
     my uint8 @data = 1..10, 27, 99;
-    my buf8 $buf .= new(@data);
-    do-stuff-quickly($buf);
+    my buf8 $buf .= new(@data); # pretty quick
+    do-stuff($buf, +$buf);
 ```
 
 ---
@@ -158,7 +158,7 @@ Both Perl 5 and 6 have a Flate compression library. But need to code for Predict
 
 Perl has good native data types. These help somewhat, with the processing and keeping memory pressure down.
 
-But not enough. This is critical code. Probably 90-95% of an average PDF is compressed stream data 
+But not enough. Probably 90-95% of an average PDF is compressed stream data. Speed is critical.
 
 Perl 6 has a great NativeCall interface. Easy to code this in C. Should be faster.
 
@@ -173,7 +173,7 @@ Use this to unpack variable length words as a 32 bit longs.
 
 With `/W [1 3 1]`:
 
-Bytes ```[1,  0, 0, 2,  3,   10,  0, 1, 7,  20]```
+Bytes ```[1, 0,0,2, 3,  10, 0,1,7, 20]```
 
 Decodes to: ```[[1, 2, 3,], [10, 262, 20]]```
 
@@ -182,7 +182,7 @@ Decodes to: ```[[1, 2, 3,], [10, 262, 20]]```
 ---
 
 ```
-    #| variable resampling, e.g. to decode:
+    #| variable re-sampling, e.g. to decode:
     #|   obj 123 0 << /Type /XRef /W [1, 3, 1]
     multi sub resample( $nums!, 8, Array $W!)  {
         my uint $i = 0;
@@ -213,7 +213,7 @@ Decodes to: ```[[1, 2, 3,], [10, 262, 20]]```
 Factoring out the inner Loop:
 -------
 ```
-#| variable resampling, e.g. to decode/encode:
+#| variable re-sampling, e.g. to decode/encode:
 #|   obj 123 0 << /Type /XRef /W [1, 3, 1]
 multi method resample( $in!, 8, Array $W!)  {
     my uint32 $in-len = +$in;
@@ -259,7 +259,7 @@ extern void pdf_buf_unpack_32_W(
 Registering the function
 ------
 
-C definition [pdf_buf.h]:
+C prototype [pdf_buf.h]:
 
 ```
 extern void pdf_buf_unpack_32_W(
@@ -267,7 +267,7 @@ extern void pdf_buf_unpack_32_W(
     uint8_t *w, size_t w_len);
 ```
 
-Corresponding Perl 6 definition [Buf.pm]:
+Corresponding Perl 6 prototype [Buf.pm]:
 
 ```
     use NativeCall;
@@ -276,8 +276,31 @@ Corresponding Perl 6 definition [Buf.pm]:
     sub pdf_buf_pack_32_W(
                     Blob, Blob, size_t,
                     Blob, size_t)
-                is native(
-                &libpdf) { * }
+                is native(&libpdf) { * }
 ```
 
+---
+Tool-chain
+-----
+- Uses the Perl 6 LibraryMake module
+- Makefile generated from hand-coded Makefile.in
+- Configuration inherited from Rakudo
+- Tested on Ubuntu 16.04.2 LTS
+- Shareable library built by module installer
+- Should build on Mac OS X, Windows
 
+---
+Conclusions
+-----
+Initial impressions:
+
+- Easy to get started
+- Performance gains (xt/filter-predictors_bulk: 45s -> 1s)
+- Conceptually simple and inherently fast
+- Clean language separation
+- Complements C (build, test, deploy, prototype)
+- PDF on Perl 6 is looking more feasible
+
+Further Considerations:
+- Other compiled languages?
+- Advanced NativeCall (structs, unions, allocation, callbacks,..)
