@@ -12,6 +12,8 @@ for @<code> {
     my $snippet = ~$_;
     # work around "Merging Global symbols failed" error
     $snippet ~~ s/'unit module OpenSSL::Digest;'//;
+    # avoid premature end of testing
+    $snippet ~~ s/'done-testing;'//;
     unless $snippet ~~ / extern | '#define' / { # not C
         # disable say
         sub say(|c) { }
