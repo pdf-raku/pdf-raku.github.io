@@ -1,0 +1,26 @@
+SRC=src
+
+all : lib doc
+
+lib: resources/lib/libbuf%SO% %FAKESO%
+
+resources/lib/libbuf%SO%: $(SRC)/buf%O%
+	%LD% %LDSHARED% %LDFLAGS% %LDOUT%resources/lib/libbuf%SO% $(SRC)/buf%O%
+
+$(SRC)/buf%O%: $(SRC)/libbuf/buf.c $(SRC)/libbuf/buf.h
+	%CC% -I $(SRC) -c %CCSHARED% %CCFLAGS% %CCOUT%$(SRC)/buf%O% $(SRC)/libbuf/buf.c
+
+test: all
+	@prove -e'perl6 -I lib' -v t
+
+memtest: all
+	@prove -e'perl6-valgrind-m -I lib' -v t
+
+doc :: README.pdf
+
+README.pdf : README.md
+	@echo need to remake $@ from $?. Pleae use Marp GUI.
+
+clean::
+	@rm -f $(SRC)/*.o resources/lib/libbuf.dll resources/lib/libbuf.dll resources/lib/libbuf.dll resources/lib/libbuf.dylib resources/lib/libbuf.so
+

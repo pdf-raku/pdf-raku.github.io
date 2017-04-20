@@ -1,0 +1,79 @@
+[1] Intro
+- C programming since 80s
+- Part time Perl since 93 started with Perl 4
+- Print Production work in C/Postscript
+- Teams/Specified/Batch/Tested in 90's, early 00's
+- stuff had to work 50,000x at 4 in the morning
+- 1-2 programmers in mid 2000s. Perl Work
+- Missed Teams/Specifications/Larger Projects
+- Open source lest than 10 years
+- Perl 6 is a big topic. Just covering one or two things, I've been looking at
+
+[2] Perl6 Project
+- Rakudo (Perl 6) for several years (Modules, Tests, Rakudo)
+- Interested in Perl 6 for about 5 years (2012)
+- Perl 5 fading but steady modest presence in NZ
+- See Perl 6 not as a replacement, but a complementry glue langauge
+- of which this C integration is an example
+
+[3] About me
+- Just part-time. But adds up over several years.
+- Test suite in better shape (adds stability)
+- A number of full-time core members
+- 4 years - time flies
+
+[4] Gradual Typing
+- type safety as in Java / C#, but optional
+- Safter more readable code
+- Compiler/runtime checking
+- Easy seems natural
+
+[5] Natives
+- Can be used like regular Perl 6 types
+- represented as C types int8_t float char*
+- avoid int. may not correspond to compiler int
+- int32, if needed
+- Big wins with NativeCall interface and C#/Java JIT
+
+[6] Blobs/Bufs
+- Blobs/Bufs More to do with I/O and exchange
+- underly binary data and string encoding
+- some conversion my be needed to native formats.
+- e.g. network words to native words
+- have to be careful with multibyte values, e.g. nums
+- might work on one platform, but not another
+- hopefully stuff from the ecosystem is OK
+
+[7] Nativecall
+- NativeCall is easy, because of native types
+- Hardest part is building these into the language
+- Big deal compared to other dynamic languages
+- In particular Perl 5 XS complexity comes from
+
+
+[8] NativeCall Test
+- 'is native' attribute. similar to extern in C#
+- I imported that test from the Pure Perl MD5 module
+
+[9]NativeCall Perl
+- Changed VM 4 years ago
+- New VM not yet serously jitting
+- Microbenchmarks only
+- In its grace period
+- But work in progress at the moment
+
+[10] Buf Function (C)
+- on an x346 that's a few years old
+- For comparision Hard disk I/O 10-15 Mbyte/sec
+
+[11] Buf Function (Perl)
+- written idiomatically
+- should interconvert with C
+
+[12]
+- MoarVM 4-5 years old.
+- JIT work in the pipe-line
+- available x386/64 first
+- Much more to NativeCall
+
+
