@@ -5,3 +5,7 @@ Makefile
 blib/
 *.o
 *.so.*
+*.so
+*.dll
+*.dylib
+
