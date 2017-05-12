@@ -35,15 +35,15 @@ a prototype stage.
 
 Less structured lightweight alternative to PDF::Doc.
 
-### [HTML::Canvas]
+### [HTML::Canvas](https://github.com/p6-pdf/HTML-Canvas-p6)
 
 Implements the HTML5 Canvas 2D API. For simple text, graphics and images.
 
-### [PDF::Style]
+### [PDF::Style](https://github.com/p6-pdf/PDF-Style-p6)
 
 A companion module to PDF::Style. Allows composition with HTML positioning and CSS Styling rules and box model.
 
-### [CSS::Declarations]
+### [CSS::Declarations](https://github.com/p6-css/CSS-Declarations-p6)
 
 Top of the CSS tool-chain. An important companion to HTML::Canvas and PDF::Style.
 
@@ -57,11 +57,11 @@ Put to work by PDF::Lite and (eventually) PDF::Doc
 
 The king-pin of the PDF tool-chain. Handles physical access to PDF's, including reading, writing, compression and encryption.
 
-### [PDF::Grammar]
+### [PDF::Grammar](https://github.com/p6-pdf/PDF-Grammr-p6)
 
 A collection of grammars for parsing PDF elements and content
 
-### [Lib::PDF] library of decoding and encoding functions, etc.
+### [Lib::PDF](https://github.com/p6-pdf/libpdf-p6) library of decoding and encoding functions, etc.
 
 An optional library of encoding and decoding routines, written in C for
 performance. At this stage, only a few select filters are available.
