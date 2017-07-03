@@ -1,16 +1,17 @@
-NativeCall/Cairo in Perl 6 - a case stody
+NativeCall/Cairo in Perl 6 - work in progress
 --------------------------------------
 David Warring                July 2017
 
-- Cairo is a popular 2D graphics native library
+- `libcairo` is a 2D graphics native library
+- Cairo is a Perl 6 module
 - A good demonstration of the NativeCall interface
-- Native Subroutine calls
-- Native 'methods'
-- Enumerations
-- 'CPointer' Classes
-- 'CStruct' Classes
-- Method calls
-- Perl6 Callbacks
+  - Native 'methods'
+  - Enumerations
+  - 'CPointer' Classes
+  - 'CStruct' Classes
+  - Native Subroutine calls
+  - Native method calls
+  - Perl6 Callbacks
 
 ---
 
@@ -25,8 +26,8 @@ Perl 6 has PHP/Ruby/Python like dynamic arrays:
 ```
 But also C/C#/Java like compact native arrays and variables:
 ```
-    my uint32 @b = 123, 568, 789;
-    my uint8 $btyes;
+    my uint32 @b = 123, 456, 789;
+    my uint8 $bytes;
 ```
 
 Design goal: Native arrays faster in tight loops and critical code.
@@ -37,7 +38,7 @@ Perl 6 does has an affinity to native libraries.
 
 ---
 
-Cairo - helloworld in C
+Cairo - hello world in C
 -------
 
 ```
@@ -81,8 +82,10 @@ cairo_public cairo_surface_t *
 cairo_image_surface_create (cairo_format_t format,
 			    int	width,
 			    int	height);
-                cairo_public void
+
+cairo_public void
 cairo_move_to (cairo_t *cr, double x, double y);
+
 cairo_public void
 cairo_show_text (cairo_t *cr, const char *utf8);
                 
@@ -107,7 +110,7 @@ $img.write_png: "hello.png"
 
 ---
 
-'Cairo' Module
+'Cairo' Module Implementation
 ---
 
 Defines just enough to run our 'hello world' example.
@@ -133,6 +136,32 @@ class cairo_t is repr('CPointer') {
 Context {
     has cairo_t $.context handles <show_text move_to>;
 }
+```
+---
+Native Subroutines vs Methods
+-------
+
+```
+class cairo_surface_t is repr('CPointer') {}
+sub cairo_surface_write_to_png(cairo_surface_t surface,
+                               Str $filename)
+     returns int32
+     is native($cairolib)
+     {*}
+```
+Is better written as:
+```
+class cairo_surface_t is repr('CPointer') {
+    method write_to_png(Str $filename)
+        returns int32
+        is native($cairolib)
+        is symbol('cairo_surface_write_to_png')
+        {*}
+}
+```
+And called as:
+```
+    $surface.write_to_png("myfile.png");
 ```
 ---
 
@@ -179,7 +208,6 @@ class Image is Surface {
         return self.new: :$surface;
     }
 }
-
 ```
 ---
 ```
@@ -229,7 +257,9 @@ $img.write_png: "hello.png"
 ![hello.png 250%](hello.png)
 
 ---
-C structs can be directly declared. For example::
+C Structs in NativeCall
+-----
+These can be directly declared. For example::
 
 ```
 typedef struct _cairo_matrix {
@@ -241,7 +271,7 @@ cairo_public void
 cairo_matrix_translate (cairo_matrix_t *matrix,
                         double tx, double ty);
 ```
-Is represented as:
+Is declared as:
 ```
 our class cairo_matrix_t is repr('CStruct') {
     has num64 $.xx; has num64 $.yx;
@@ -256,7 +286,7 @@ our class cairo_matrix_t is repr('CStruct') {
  }
 ```
 ---
-Add a Matrix wrapper class:
+Also add a Matrix wrapper class:
 ```
 class Matrix {
     has cairo_matrix_t $.matrix handles <
@@ -288,7 +318,7 @@ NativeCall is bidirectional. We can call Perl 6 routines from C code.
 ```
 cairo_public cairo_status_t
 cairo_surface_write_to_png_stream (
-            cairo_surface_t	*surface,
+            cairo_surface_t *surface,
             cairo_write_func_t write_func,
             void *closure);
 ```
@@ -306,23 +336,30 @@ our class cairo_surface_t is repr('CPointer') {
 }
 ```
 ---
+Surface 'Blob' method
+----
+Write a Cairo surface to an in-memory buffer.
 ```
 class Surface {
 # ...
-    method Blob(UInt :$size = 64_000 --> Blob) {
+    method Blob(UInt :$size = 16_000 --> Blob) {
          my $buf = CArray[uint8].new;
          $buf[$size] = 0;
          my $closure = StreamClosure.new: :$buf,
                    :buf-len(0), :n-read(0), :$size;
-         $!surface.write_to_png_stream(&StreamClosure::write, $closure);
+         $!surface.write_to_png_stream(
+                              &StreamClosure::write,
+                              $closure);
          return Blob.new: $buf[0 ..^ $closure.buf-len];
     }
 }
 ```
 ---
+The StreamClosure class
+------
+Call-back class. Used to read and write buffers
 ```
-my class StreamClosure is repr('CStruct') is rw {
-
+class StreamClosure is repr('CStruct') is rw {
     has CArray[uint8] $!buf;
     has size_t $.buf-len;
     has size_t $.size;
@@ -339,6 +376,11 @@ my class StreamClosure is repr('CStruct') is rw {
  }
 ```
 ---
+
+Cairo is a work in progress
+-----
+But also a good example to refer to.
+
 Perl 6 Books are on the way
 -----
 - Think Perl 6: How to Think Like a Computer Scientist, by Laurent Rosenfeld (published, print)
