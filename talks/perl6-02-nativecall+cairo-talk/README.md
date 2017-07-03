@@ -107,10 +107,34 @@ $img.write_png: "hello.png"
 
 ---
 
-Minimal NativeCall bindings
+'Cairo' Module
 ---
 
-Define a Perl 6 `Cairo` module that bind to `cairo` and defines just enough to run our 'hello world' example.
+Defines just enough to run our 'hello world' example.
+
+
+
+```
+unit Class Cairo;
+
+class cairo_surface_t is repr('CPointer') {
+}
+
+class Surface {
+    has cairo_surface_t $.surface handles <write_to_png>;
+}
+
+class Image is Surface {
+}
+
+class cairo_t is repr('CPointer') {
+}
+
+Context {
+    has cairo_t $.context handles <show_text move_to>;
+}
+```
+---
 
 ```
 unit module Cairo;
@@ -162,12 +186,10 @@ class Image is Surface {
 our class cairo_t is repr('CPointer') {
     method show_text(Str $utf8)
         is native($cairolib)
-        is symbol('cairo_show_text')
-        {*}
+        is symbol('cairo_show_text') {*}
     method move_to(num64 $x, num64 $y)
         is native($cairolib)
-        is symbol('cairo_move_to')
-        {*}
+        is symbol('cairo_move_to' {*}
 }
 
 class Context {
@@ -190,3 +212,138 @@ class Context {
 
 ```
 ---
+That's enough for our Hello World! program.
+
+```
+use Cairo;
+
+my Cairo::Image $img .= create( Cairo::FORMAT_ARGB32,
+                                128, 128);
+my Cairo::Context $ctx .= new($img);
+
+$ctx.move_to(10, 50);
+$ctx.show_text: "Hello world";
+
+$img.write_png: "hello.png"
+```
+![hello.png 250%](hello.png)
+
+---
+C structs can be directly declared. For example::
+
+```
+typedef struct _cairo_matrix {
+    double xx; double yx;
+    double xy; double yy;
+    double x0; double y0;
+} cairo_matrix_t;
+cairo_public void
+cairo_matrix_translate (cairo_matrix_t *matrix,
+                        double tx, double ty);
+```
+Is represented as:
+```
+our class cairo_matrix_t is repr('CStruct') {
+    has num64 $.xx; has num64 $.yx;
+    has num64 $.xy; has num64 $.yy;
+    has num64 $.x0; has num64 $.y0;
+
+    method translate(num64 $tx, num64 $ty)
+        is native($cairolib)
+        is symbol('cairo_matrix_translate')
+        {*}
+
+ }
+```
+---
+Add a Matrix wrapper class:
+```
+class Matrix {
+    has cairo_matrix_t $.matrix handles <
+        xx yx xy yy x0 y0
+    > .= new: :xx(1e0), :yy(1e0);
+
+    method translate(Num(Cool) $sx, Num(Cool) $sy) {
+        $!matrix.translate($sx, $sy);
+        self;
+    }
+}
+```
+Test Program:
+```
+use Cairo;
+
+my $matrix = Cairo::Matrix.new;
+say $matrix;
+# xx => 1, yx => 0, xy => 0, yy => 1, x0 => 0, y0 => 0)
+$matrix.translate(10,20);
+say $matrix;
+# xx => 1, yx => 0, xy => 0, yy => 1, x0 => 10, y0 => 20)
+```
+---
+Callbacks
+---
+NativeCall is bidirectional. We can call Perl 6 routines from C code.
+
+```
+cairo_public cairo_status_t
+cairo_surface_write_to_png_stream (
+            cairo_surface_t	*surface,
+            cairo_write_func_t write_func,
+            void *closure);
+```
+In Perl 6:
+```
+our class cairo_surface_t is repr('CPointer') {
+# ...
+       method write_to_png_stream(&write-func(
+           StreamClosure, Pointer[uint8],
+           uint32 --> int32), StreamClosure)
+        returns int32
+        is native($cairolib)
+        is symbol('cairo_surface_write_to_png_stream')
+        {*}
+}
+```
+---
+```
+class Surface {
+# ...
+    method Blob(UInt :$size = 64_000 --> Blob) {
+         my $buf = CArray[uint8].new;
+         $buf[$size] = 0;
+         my $closure = StreamClosure.new: :$buf,
+                   :buf-len(0), :n-read(0), :$size;
+         $!surface.write_to_png_stream(&StreamClosure::write, $closure);
+         return Blob.new: $buf[0 ..^ $closure.buf-len];
+    }
+}
+```
+---
+```
+my class StreamClosure is repr('CStruct') is rw {
+
+    has CArray[uint8] $!buf;
+    has size_t $.buf-len;
+    has size_t $.size;
+    method TWEAK(CArray :$buf!) { $!buf := $buf }
+    method buf-pointer(--> Pointer[uint8]) {
+        nativecast(Pointer[uint8], $!buf);
+    }
+    method write-pointer(--> Pointer) {
+        Pointer[uint8].new: +$.buf-pointer + $!buf-len;
+    }
+    our method write(Pointer $in, uint32 $len --> int32) {
+           note "writing $len bytes";
+    }
+ }
+```
+---
+Perl 6 Books are on the way
+-----
+- Think Perl 6: How to Think Like a Computer Scientist, by Laurent Rosenfeld (published, print)
+- Perl 6 Fundamentals , by Moritz Lenz (in work, can be bought right now, e-book)
+- Learning Perl 6, by Brian D. Foy (in work)
+- Migrating to Perl 6, by Andrew Shitov (in work)
+- Web Application Development in Perl 6, by Gabor Szabo (draft, fundraising)
+

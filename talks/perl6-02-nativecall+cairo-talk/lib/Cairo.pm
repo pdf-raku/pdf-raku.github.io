@@ -1,7 +1,6 @@
 # A small subset of the real Perl 6 Cairo module
 unit module Cairo;
 my $cairolib;
-my $xcairolib;
 BEGIN {
     $cairolib = ('cairo', v2);
 }
