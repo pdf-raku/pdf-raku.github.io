@@ -1,21 +1,18 @@
-NativeCall/Cairo in Perl 6 - work in progress
+Cairo in Perl 6 - NativeCall bindings
 --------------------------------------
 David Warring                July 2017
 
 - `libcairo` is a 2D graphics native library
-- Cairo is a Perl 6 module
-- A good demonstration of the NativeCall interface
-  - Native 'methods'
-  - Enumerations
-  - 'CPointer' Classes
-  - 'CStruct' Classes
-  - Native Subroutine calls
-  - Native method calls
-  - Perl6 Callbacks
+- Working on Perl 6 Cairo module
+- Simple 'Hello world' example
+- In 3 slides of code
+- Natve C Structs
+- Callbacks
+- Workplace?
 
 ---
-
 <!-- page_number: true -->
+
 Perl 6 Native Types Recap
 ------
 
@@ -35,7 +32,7 @@ Design goal: Native arrays faster in tight loops and critical code.
 
 Optimisation is still a work in progress (JIT).
 
-Perl 6 does has an affinity to native libraries.
+Perl 6 has an affinity to native libraries.
 
 ---
 
@@ -111,34 +108,34 @@ $img.write_png: "hello.png"
 
 ---
 
-'Cairo' Module Implementation
----
-
-Module skeleton:
+'Cairo' Module Skeleton
+------
 
 ```
 unit Class Cairo;
 
 class cairo_surface_t is repr('CPointer') {
+   # native calls
 }
 
 class Surface {
-    has cairo_surface_t $.surface
-        handles <write_to_png>;
+   # user methods
 }
 
 class Image is Surface {
+   # user methods
 }
 
 class cairo_t is repr('CPointer') {
+   # native calls
 }
 
 Context {
-    has cairo_t $.context handles <show_text move_to>;
+   # external methods
 }
 ```
 ---
-Native Subroutines vs Methods
+NativeCall Subroutines and Methods
 -------
 
 ```
@@ -159,7 +156,7 @@ class cairo_surface_t is repr('CPointer') {
         {*}
 }
 ```
-And called as:
+Then called as:
 ```
     $surface.write_to_png("myfile.png");
 ```
@@ -191,7 +188,7 @@ class cairo_surface_t is repr('CPointer') {
 }
 ```
 ---
-Cairo Page 2: Surfaces and Images
+Cairo Page 2: Surface and Image classes
 ---------
 ```
 class Surface {
@@ -215,7 +212,8 @@ class Image is Surface {
 }
 ```
 ---
-Cairo Page 3: Context
+Cairo Page 3: Context class
+--------
 ```
 class cairo_t is repr('CPointer') {
     method show_text(Str $utf8)
@@ -225,7 +223,6 @@ class cairo_t is repr('CPointer') {
         is native($cairolib)
         is symbol('cairo_move_to' {*}
 }
-
 class Context {
     sub cairo_create(cairo_surface_t $surface)
         returns cairo_t
@@ -238,13 +235,12 @@ class Context {
         my $context = cairo_create($surface.surface);
         self.bless(:$context);
     }
-
  }
 
 ```
 ---
-That's enough for our Hello World! program.
-
+The 'Hello world' program again:
+-----
 ```
 use Cairo;
 
@@ -290,6 +286,7 @@ our class cairo_matrix_t is repr('CStruct') {
 ```
 ---
 Matrix wrapper class:
+-------
 ```
 class Matrix {
     has cairo_matrix_t $.matrix handles <
@@ -303,6 +300,7 @@ class Matrix {
 }
 ```
 Test Program:
+-----
 ```
 use Cairo;
 
@@ -315,7 +313,7 @@ say $matrix;
 ```
 ---
 Callbacks
----
+------
 NativeCall is bidirectional. We can call Perl 6 routines from C code.
 
 ```
@@ -342,7 +340,7 @@ our class cairo_surface_t is repr('CPointer') {
 ```
 ---
 Surface 'Blob' method
-----
+-------
 Write a Cairo surface to an in-memory buffer.
 ```
 class Surface {
@@ -382,9 +380,16 @@ class StreamClosure is repr('CStruct') is rw {
 ```
 ---
 
-Perl 6 Cairo module is a work in progress
+Workplace Tool?
 -----
-Using it as a template.
+
+Development usage. NativeCall, etc for:
+- Testing
+- Prototyping
+- Refactoring
+- Migration?
+
+---
 
 Perl 6 Books are on the way
 -----
