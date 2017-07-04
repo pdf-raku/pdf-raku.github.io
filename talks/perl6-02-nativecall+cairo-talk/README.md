@@ -15,6 +15,7 @@ David Warring                July 2017
 
 ---
 
+<!-- page_number: true -->
 Perl 6 Native Types Recap
 ------
 
@@ -47,8 +48,10 @@ Cairo - hello world in C
 int
 main (int argc, char *argv[])
 {
-    cairo_surface_t *image = cairo_image_surface_create(
-        CAIRO_FORMAT_ARGB32, 240, 80);
+    cairo_surface_t *image
+        = cairo_image_surface_create(
+                CAIRO_FORMAT_ARGB32, 240, 80
+            );
     cairo_t *ctx = cairo_create ();
 
     cairo_move_to (ctx, 10.0, 50.0);
@@ -80,15 +83,13 @@ typedef enum _cairo_format {
 
 cairo_public cairo_surface_t *
 cairo_image_surface_create (cairo_format_t format,
-			    int	width,
-			    int	height);
+			    int	width, int height);
 
 cairo_public void
 cairo_move_to (cairo_t *cr, double x, double y);
 
 cairo_public void
 cairo_show_text (cairo_t *cr, const char *utf8);
-                
 ```
 
 ---
@@ -113,9 +114,7 @@ $img.write_png: "hello.png"
 'Cairo' Module Implementation
 ---
 
-Defines just enough to run our 'hello world' example.
-
-
+Module skeleton:
 
 ```
 unit Class Cairo;
@@ -124,7 +123,8 @@ class cairo_surface_t is repr('CPointer') {
 }
 
 class Surface {
-    has cairo_surface_t $.surface handles <write_to_png>;
+    has cairo_surface_t $.surface
+        handles <write_to_png>;
 }
 
 class Image is Surface {
@@ -164,6 +164,8 @@ And called as:
     $surface.write_to_png("myfile.png");
 ```
 ---
+Cairo Page1: bindings, enums, surface
+-----
 
 ```
 unit module Cairo;
@@ -180,9 +182,6 @@ our enum Format (
     # ...
 );
 
-```
----
-```
 class cairo_surface_t is repr('CPointer') {
     method write_to_png(Str $filename)
         returns int32
@@ -190,10 +189,16 @@ class cairo_surface_t is repr('CPointer') {
         is symbol('cairo_surface_write_to_png')
         {*}
 }
+```
+---
+Cairo Page 2: Surfaces and Images
+---------
+```
 class Surface {
     has cairo_surface_t $.surface
         handles <write_to_png>;
 }
+
 class Image is Surface {
     sub cairo_image_surface_create(int32 $format,
                           int32 $width, int32 $height)
@@ -210,8 +215,9 @@ class Image is Surface {
 }
 ```
 ---
+Cairo Page 3: Context
 ```
-our class cairo_t is repr('CPointer') {
+class cairo_t is repr('CPointer') {
     method show_text(Str $utf8)
         is native($cairolib)
         is symbol('cairo_show_text') {*}
@@ -226,16 +232,13 @@ class Context {
         is native($cairolib)
         {*}
 
-    has cairo_t $.context handles <show_text>;
+    has cairo_t $.context handles <show_text move_to>;
 
     method new(Surface $surface) {
         my $context = cairo_create($surface.surface);
         self.bless(:$context);
     }
 
-    multi method move_to(Num(Cool) $x, Num(Cool) $y) {
-        $!context.move_to($x, $y);
-    }
  }
 
 ```
@@ -286,7 +289,7 @@ our class cairo_matrix_t is repr('CStruct') {
  }
 ```
 ---
-Also add a Matrix wrapper class:
+Matrix wrapper class:
 ```
 class Matrix {
     has cairo_matrix_t $.matrix handles <
@@ -326,9 +329,11 @@ In Perl 6:
 ```
 our class cairo_surface_t is repr('CPointer') {
 # ...
-       method write_to_png_stream(&write-func(
-           StreamClosure, Pointer[uint8],
-           uint32 --> int32), StreamClosure)
+       method write_to_png_stream(
+           &write-func(
+               StreamClosure, Pointer[uint8],
+               uint32 --> int32),
+           StreamClosure)
         returns int32
         is native($cairolib)
         is symbol('cairo_surface_write_to_png_stream')
@@ -377,9 +382,9 @@ class StreamClosure is repr('CStruct') is rw {
 ```
 ---
 
-Cairo is a work in progress
+Perl 6 Cairo module is a work in progress
 -----
-But also a good example to refer to.
+Using it as a template.
 
 Perl 6 Books are on the way
 -----
