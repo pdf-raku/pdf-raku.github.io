@@ -12,12 +12,12 @@
    - [3. PDF Manipulation Modules](#3-pdf-manipulation-modules)
        - [PDF::Lite](#pdflite)
        - [PDF::API6](#pdfapi6)
-   - [4. The PDF Graphics Model](#4-the-pdf-graphics-model)
+   - [4. The PDF Graphics Model xx](#4-the-pdf-graphics-model)
+       - [Graphics Summary](#graphics-summary)
    - [5. CSS and HTML Flavored Composition](#5-css-and-html-flavored-composition)
    - [98 .Low level Modules](#98-low-level-modules)
    - [99. Todo](#99-todo)
        - [Experimental Components](#experimental-components)
-
 
 ## 1. Introduction
 
@@ -130,7 +130,27 @@ all together.
 
 ## 4. The PDF Graphics Model
 
+The [PDF::Content] module implements the PDF Graphics model, including a high-level view of variables and graphics operators.
 
+### Graphics Summary
+
+#### Graphics Operators
+
+Variable | Description | Domain | Default
+--- | --- | --- | ---
+LineWidth | Stroke line-width | 0.0 .. 1.0| 1.0
+LineCap | Line-ending style | PDF::Content::Ops :LineCap|LineCap::ButtCaps (0)
+LineJoin | Line-joining style | PDF::Content::Ops::LineJoin | LineJoin::MitreJoin (0)
+DashPattern | Line-dashing pattern | [[$on-1, $off-1, ...], $phase] | [[], 0]
+StrokeColor | Stroke colorspace and color | :DeviceRGB[$r,$g,$b], :DeviceCMYK[$c,$m,$y,$k], DeviceGray[$a], ... etc| :DeviceGray[0.0]
+FillColor | Fill colorspace and color | (same as stroke-color)  | :DeviceGray[0.0]
+RenderingIntent | Color Adjustments | 'AbsoluteColorimetric', 'RelativeColormetric', 'Saturation', 'Perceptual' | 'RelativeColormetric'
+
+...
+
+#### Graphics Variables
+
+...
 
 ## 5. CSS and HTML Flavored Composition
 
