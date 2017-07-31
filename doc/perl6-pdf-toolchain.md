@@ -24,11 +24,9 @@
 
 ## 1. Introduction
 
-This is the documentation for the Perl 6 PDF Tool-chain.
+This is the documentation for the Perl 6 PDF Tool-chain, including PDF::API6, PDF::Lite, HTML::Canvas and PDF::Style.
 
-It overviews the modules that comprise the tool-chain and gives a basic background and references to the PDF standard where needed.
-
-Both this documentation and the PDF tool-chain are in the early stages of development and are expected to grow together as the tool-chain matures.
+Both this documentation and the PDF tool-chain modules are in the early stages of development and are expected to grow together as the tool-chain matures.
 
 ## 2. Overview
 
@@ -131,7 +129,7 @@ all together.
 
 
 
-## 4. The PDF Graphics Model
+## 4. PDF Graphics
 
 The [PDF::Content] module implements the PDF Graphics model, including a high-level view of variables and graphics operators.
 
@@ -194,7 +192,6 @@ As much as anything these modules exist to exercise the rest of the tool-chain
 
 ### Graphic Operators
 
-
 #### Color Operators
 
 Method | Code | Description
@@ -250,6 +247,8 @@ Method | Code | Description
 MoveTo(x, y) | m | Begin a new subpath by moving the current point to coordinates (x, y), omitting any connecting line segment. If the previous path construction operator in the current path was also m, the new m overrides it.
 LineTo(x, y) | l | Append a straight line segment from the current point to the point (x, y). The new current point shall be (x, y).
 CurveTo(x1, y1, x2, y2, x3, y3) | c | Append a cubic Bézier curve to the current path. The curve shall extend from the current point to the point (x 3 , y 3 ), using (x1 , y1 ) and (x2 , y2 ) as the Bézier control points. The new current point shall be (x3 , y3 ).
+ClosePath | h | Close the current subpath by appending a straight line segment from the current point to the starting point of the subpath.
+Rectangle(x, y, width, Height) | re | Append a rectangle to the current path as a complete subpath, with lower-left corner (x, y) and dimensions `width` and `height`.
 
 #### Path Painting Operators
 
