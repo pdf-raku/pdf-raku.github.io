@@ -3,7 +3,7 @@
 ## Table of Contents
 
    - [1. Introduction](#1-introduction)
-   - [2. Overview](#2-overview)
+   - [2. Modules Overview](#2-modules-overview)
        - [PDF Modules](#pdf-modules)
        - [PDF/HTML Suite](#pdfhtml-suite)
        - [Low Level Modules](#low-level-modules)
@@ -12,8 +12,13 @@
    - [3. PDF Manipulation Modules](#3-pdf-manipulation-modules)
        - [PDF::Lite](#pdflite)
        - [PDF::API6](#pdfapi6)
-   - [4. The PDF Graphics Model](#4-the-pdf-graphics-model)
-       - [Graphics Summary](#graphics-summary)
+   - [4. PDF Graphics](#4-pdf-graphics)
+       - [High Level Graphics (PDF::Content)](#high-level-graphics-pdfcontent)
+       - [Overview](#overview)
+       - [Images & Forms](#images--forms)
+       - [Paths and Painting](#paths-and-painting)
+       - [Patterns and Colors](#patterns-and-colors)
+       - [Low Level Graphics (PDF::Graphics::Ops)](#low-level-graphics-pdfgraphicsops)
    - [5. CSS and HTML Flavored Composition](#5-css-and-html-flavored-composition)
    - [98 .Low level Modules](#98-low-level-modules)
    - [99. Todo](#99-todo)
@@ -28,7 +33,7 @@ This is the documentation for the Perl 6 PDF Tool-chain, including PDF::API6, PD
 
 Both this documentation and the PDF tool-chain modules are in the early stages of development and are expected to grow together as the tool-chain matures.
 
-## 2. Overview
+## 2. Modules Overview
 
 here's a quick run-down of the tool-chain modules (top to bottom):
 ```
@@ -113,8 +118,7 @@ Style name-space with PDF and Cairo back-ends. Similar to structure of
 HTML::Canvas (with HTML::Canvas::To::Cairo and HTML::Canvas::To::PDF
 back-ends).
 
-Possibly need a top-down markdown or POD rendering project to pull this
-all together.
+Possibly need a top-down markdown or POD rendering project to pull this all together.
 
 
 ### Alternatives
@@ -133,7 +137,21 @@ all together.
 
 The [PDF::Content] module implements the PDF Graphics model, including a high-level view of variables and graphics operators.
 
-### Graphics Summary
+### High Level Graphics (PDF::Content)
+
+### Overview
+
+#### Text, Fonts and Text Blocks
+
+.say, .print, .text-blocks
+
+### Images & Forms
+
+### Paths and Painting
+
+### Patterns and Colors
+
+### Low Level Graphics (PDF::Graphics::Ops)
 
 #### Graphics Variables Summary
 
