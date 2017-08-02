@@ -1,4 +1,4 @@
-# The Perl 6 PDF Tool-chain
+# Introduction to The Perl 6 PDF Tool-chain
 
 ## Table of Contents
 
@@ -29,7 +29,7 @@
 
 ## 1. Introduction
 
-This is the documentation for the Perl 6 PDF Tool-chain, including PDF::API6, PDF::Lite, HTML::Canvas and PDF::Style.
+This document overviews the Perl 6 PDF Tool-chain, including PDF::API6, PDF::Lite. Also covered are the styling modules HTML::Canvas and PDF::Style.
 
 Both this documentation and the PDF tool-chain modules are in the early stages of development and are expected to grow together as the tool-chain matures.
 
@@ -49,31 +49,112 @@ here's a quick run-down of the tool-chain modules (top to bottom):
                          [PDF::Style]     <--| [CSS::Declarations]
 ```
 
-
 ### PDF Modules
 
-#### [PDF::Lite](https://github.com/p6-pdf/PDF-Lite-p6) - Focused on authoring and basic content manipulation only.
+#### [PDF::Lite](https://github.com/p6-pdf/PDF-Lite-p6)
 
-#### [PDF::API6](https://github.com/p6-pdf/PDF-API6-p6) - Inherits from, and further extends PDF::Lite
+A minimalistic module for manipulating PDF documents. Focused on authoring and basic content manipulation only.
+
+#### [PDF::API6](https://github.com/p6-pdf/PDF-API6-p6)
+
+Inherits from, and further extends PDF::Lite
 
 The aim is general purpose support for reading and writing PDF files, including Forms, Meta-data, Accessibility and Font manipulation. This module is at
 a prototype stage.
 
-### PDF/HTML Suite
+### Styling Modules
 
-PDF::Style[::Font], HTML::Canvas[::To::PDF] and CSS::Declarations are designed to work together for higher level HTML/CSS flavoured PDF creation.
+PDF::Style, HTML::Canvas::To::PDF and CSS::Declarations are optional modules for HTML and CSS driven PDF creation.
 
-#### [HTML::Canvas](https://github.com/p6-pdf/HTML-Canvas-p6)
+#### [HTML::Canvas::To::PDF](https://github.com/p6-pdf/HTML-Canvas-p6)
 
 Implements the HTML5 Canvas 2D API. For simple text, graphics and images.
 
+```
+use v6;
+# Create a simple Canvas. Save as PDF
+
+use PDF::Lite;
+use HTML::Canvas;
+use HTML::Canvas::To::PDF;
+
+my HTML::Canvas $canvas .= new;
+
+# render to a PDF page
+my PDF::Lite $pdf .= new;
+my $gfx = $pdf.add-page.gfx;
+my $feed = HTML::Canvas::To::PDF.new: :$gfx, :$canvas;
+
+$canvas.context: -> \ctx {
+    ctx.save; {
+        ctx.fillStyle = "orange";
+        ctx.fillRect(10, 10, 50, 50);
+
+        ctx.fillStyle = "rgba(0, 0, 200, 0.3)";
+        ctx.fillRect(35, 35, 50, 50);
+    }; ctx.restore;
+
+    ctx.font = "18px Arial";
+    ctx.fillText("Hello World", 40, 75);
+}
+
+# save canvas as PDF
+$pdf.save-as: "t/canvas-demo.pdf";
+```
+
 #### [PDF::Style](https://github.com/p6-pdf/PDF-Style-p6)
 
-A companion module to HTML::Canvas. Allows composition with HTML positioning and CSS Styling rules and box model.
+Allows composition with HTML positioning and CSS Styling rules and box model. Text. Images and HTML::Canvas elements are positioned onto a viewport (class PDF::Style::Viewport). The viewport is then rendered to a PDF Graphical object; a page, XObject form or parttern.
 
-#### [CSS::Declarations](https://github.com/p6-css/CSS-Declarations-p6)
+##### Styled Text
 
-Top of the CSS tool-chain. An important companion to HTML::Canvas and PDF::Style.
+```
+use v6;
+use PDF::Lite;
+use PDF::Style::Viewport;
+use PDF::Style::Element;
+use CSS::Declarations;
+use CSS::Declarations::Units :pt, :ops;
+
+my $pdf = PDF::Lite.new;
+my $vp = PDF::Style::Viewport.new: :width(420pt), :height(595), :style("background-color: blue; opacity: 0.2;");
+my $page = $vp.add-page($pdf);
+
+my $css = CSS::Declarations.new: :style("font-family:Helvetica; width:250pt; height:80pt; top:20pt; left:20pt; border: 1pt dashed green; padding: 2pt");
+
+my $text = q:to"--ENOUGH!!--".lines.join: ' ';
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+    --ENOUGH!!--
+
+my PDF::Style::Element $elem = $vp.element( :$text, :$css );
+
+$elem.render($page);
+$pdf.save-as: "t/example.pdf";
+```
+
+##### Styled Forms and Images
+
+```
+use PDF::Style::Viewport;
+use CSS::Declarations;
+use PDF::Lite;
+
+# also dump to HTML, for comparision
+
+my $vp = PDF::Style::Viewport.new;
+my $css = CSS::Declarations.new: :style("font-family:Helvetica; height:250pt; position:absolute; top:20pt; left:20pt; border: 5px solid rgba(0,128,0,.2)");
+my @Html = '<html>', '<body>', $vp.html-start;
+
+my $pdf = PDF::Lite.new;
+my $page = $vp.add-page($pdf);
+
+my $image = "t/images/snoopy-happy-dance.jpg";
+
+my $elem = $vp.element( :$css, :$image );
+$elem.render($page);
+$pdf.save-as: "test.pdf";
+```
 
 ### Low Level Modules
 
