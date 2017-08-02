@@ -18,7 +18,6 @@
        - [Images & Forms](#images--forms)
        - [Paths and Painting](#paths-and-painting)
        - [Patterns and Colors](#patterns-and-colors)
-       - [Low Level Graphics (PDF::Graphics::Ops)](#low-level-graphics-pdfgraphicsops)
    - [5. CSS and HTML Flavored Composition](#5-css-and-html-flavored-composition)
    - [98 .Low level Modules](#98-low-level-modules)
    - [99. Todo](#99-todo)
@@ -26,6 +25,7 @@
    - [Appendix: Graphics Operators and Variables](#appendix-graphics-operators-and-variables)
        - [Graphic Operators](#graphic-operators)
        - [Graphics Variables](#graphics-variables)
+
 
 ## 1. Introduction
 
@@ -147,27 +147,15 @@ The [PDF::Content] module implements the PDF Graphics model, including a high-le
 
 ### Images & Forms
 
+.do
+
 ### Paths and Painting
+
+.paint
 
 ### Patterns and Colors
 
-### Low Level Graphics (PDF::Graphics::Ops)
 
-#### Graphics Variables Summary
-
-Variable | Description | Domain | Default
---- | --- | --- | ---
-LineWidth | Stroke line-width | 0.0 .. 1.0| 1.0
-LineCap | Line-ending style | PDF::Content::Ops :LineCap|LineCap::ButtCaps (0)
-LineJoin | Line-joining style | PDF::Content::Ops::LineJoin | LineJoin::MitreJoin (0)
-DashPattern | Line-dashing pattern | [[$on-1, $off-1, ...], $phase] | [[], 0]
-StrokeColor | Stroke colorspace and color | :DeviceRGB[$r,$g,$b], :DeviceCMYK[$c,$m,$y,$k], DeviceGray[$a], ... etc| :DeviceGray[0.0]
-FillColor | Fill colorspace and color | (same as stroke-color)  | :DeviceGray[0.0]
-RenderingIntent | Color Adjustments | 'AbsoluteColorimetric', 'RelativeColormetric', 'Saturation', 'Perceptual' | 'RelativeColormetric'
-
-...
-
-#### Graphics Operators Summary
 
 ...
 
@@ -314,6 +302,7 @@ FillAlpha | ca | The constant shape or constant opacity value to be used for oth
 FillColor| | current fill colorspace and color | :DeviceGray[0.0] | .FillColor = :DeviceCMYK[.7,.2,.2,.1]
 LineCap  |  LC | A code specifying the shape of the endpoints for any open path that is stroked | 0 (butt) | .LineCap = LineCaps::RoundCaps;
 LineJoin | LJ | A code specifying the shape of joints between connected segments of a stroked path | 0 (miter) | .LineJoin = LineJoin::RoundJoin
+LineWidth | w | Stroke line-width | 1.0 | .LineWidth = 2.5
 StrokeAlpha | CA | The constant shape or constant opacity value to be used when paths are stroked | 1.0 | .StrokeAlpha = 0.5;
 StrokeColor| | current stroke colorspace and color | :DeviceGray[0.0] | .StrokeColor = :DeviceRGB[.7,.2,.2]
 
