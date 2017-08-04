@@ -2,38 +2,60 @@
 
 ## Table of Contents
 
-   - [1. Introduction](#1-introduction)
-   - [2. Modules Overview](#2-modules-overview)
+- [SECTION I: Introduction](#section-i-introduction)
+   - [Modules Overview](#modules-overview)
        - [PDF Modules](#pdf-modules)
-       - [PDF/HTML Suite](#pdfhtml-suite)
+       - [Styling Modules](#styling-modules)
        - [Low Level Modules](#low-level-modules)
-       - [Status](#status)
-       - [Alternatives](#alternatives)
-   - [3. PDF Manipulation Modules](#3-pdf-manipulation-modules)
-       - [PDF::Lite](#pdflite)
-       - [PDF::API6](#pdfapi6)
-   - [4. PDF Graphics](#4-pdf-graphics)
+   - [Status](#status)
+       - [Released: PDF::Grammar, PDF, CSS::Declarations.](#released-pdfgrammar-pdf-cssdeclarations)
+       - [Pending: PDF::API6, PDF::Lite, PDF::Content](#pending-pdfapi6-pdflite-pdfcontent)
+       - [Held Back: Lib::PDF](#held-back-libpdf)
+       - [Experimental: HTML::Canvas::To::PDF, PDF::Style, PDF::Style::Font](#experimental-htmlcanvastopdf-pdfstyle-pdfstylefont)
+   - [Alternatives](#alternatives)
+       - [Cairo](#cairo)
+- [SECTION II:  PDF Layers](#section-ii-pdf-layers)
+   - [PDF (layer I - data)](#pdf-layer-i---data)
+   - [PDF::Lite (layer II - graphics)](#pdflite-layer-ii---graphics)
+       - [Graphics](#graphics)
        - [High Level Graphics (PDF::Content)](#high-level-graphics-pdfcontent)
        - [Overview](#overview)
        - [Images & Forms](#images--forms)
        - [Paths and Painting](#paths-and-painting)
        - [Patterns and Colors](#patterns-and-colors)
-   - [5. CSS and HTML Flavored Composition](#5-css-and-html-flavored-composition)
-   - [98 .Low level Modules](#98-low-level-modules)
-   - [99. Todo](#99-todo)
-       - [Experimental Components](#experimental-components)
-   - [Appendix: Graphics Operators and Variables](#appendix-graphics-operators-and-variables)
+   - [PDF::API6 (layer III - auxillary)](#pdfapi6-layer-iii---auxillary)
+- [SECTION III: Auxillary Modules](#section-iii-auxillary-modules)
+   - [PDF::Style](#pdfstyle)
+   - [HTML::Canvas::To::PDF](#htmlcanvastopdf)
+   - [CSS::Declarations](#cssdeclarations)
+- [SECTION IV: Low Level Modules](#section-iv-low-level-modules)
+   - [PDF](#pdf)
+   - [PDF::Grammar](#pdfgrammar)
+   - [PDF::Content](#pdfcontent)
+   - [Lib::PDF](#libpdf)
+- [APPENDIX: Graphics Operators and Variables](#appendix-graphics-operators-and-variables)
+   - [Appendix I: Graphics](#appendix-i-graphics)
        - [Graphic Operators](#graphic-operators)
+       - [Graphics State](#graphics-state)
+       - [Text Operators](#text-operators)
+       - [Path Construction](#path-construction)
+       - [Path Painting Operators](#path-painting-operators)
+       - [Path Clipping](#path-clipping)
        - [Graphics Variables](#graphics-variables)
+   - [Appendix II: TODO](#appendix-ii-todo)
+       - [Fonts](#fonts)
+       - [Pod::To::PDF](#podtopdf)
+   - [Appendix III: Experimental Components](#appendix-iii-experimental-components)
+       - [PDF::Zen](#pdfzen)
+       - [PDF::Render::Cairo](#pdfrendercairo)
 
-
-## 1. Introduction
+# SECTION I: Introduction
 
 This document overviews the Perl 6 PDF Tool-chain, including PDF::API6, PDF::Lite. Also covered are the styling modules HTML::Canvas and PDF::Style.
 
 Both this documentation and the PDF tool-chain modules are in the early stages of development and are expected to grow together as the tool-chain matures.
 
-## 2. Modules Overview
+## Modules Overview
 
 here's a quick run-down of the tool-chain modules (top to bottom):
 ```
@@ -53,7 +75,7 @@ here's a quick run-down of the tool-chain modules (top to bottom):
 
 #### [PDF::Lite](https://github.com/p6-pdf/PDF-Lite-p6)
 
-A minimalistic module for manipulating PDF documents. Focused on authoring and basic content manipulation only.
+A minimalist module for manipulating PDF documents. Focused on authoring and basic content manipulation only.
 
 #### [PDF::API6](https://github.com/p6-pdf/PDF-API6-p6)
 
@@ -104,7 +126,7 @@ $pdf.save-as: "t/canvas-demo.pdf";
 
 #### [PDF::Style](https://github.com/p6-pdf/PDF-Style-p6)
 
-Allows composition with HTML positioning and CSS Styling rules and box model. Text. Images and HTML::Canvas elements are positioned onto a viewport (class PDF::Style::Viewport). The viewport is then rendered to a PDF Graphical object; a page, XObject form or parttern.
+Allows composition with HTML positioning and CSS Styling rules and box model. Text. Images and HTML::Canvas elements are positioned onto a view-port (class PDF::Style::Viewport). The view-port is then rendered to a PDF Graphical object; a page, XObject form or pattern.
 
 ##### Styled Text
 
@@ -140,7 +162,7 @@ use PDF::Style::Viewport;
 use CSS::Declarations;
 use PDF::Lite;
 
-# also dump to HTML, for comparision
+# also dump to HTML, for comparison
 
 my $vp = PDF::Style::Viewport.new;
 my $css = CSS::Declarations.new: :style("font-family:Helvetica; height:250pt; position:absolute; top:20pt; left:20pt; border: 5px solid rgba(0,128,0,.2)");
@@ -175,19 +197,19 @@ A collection of grammars for parsing PDF elements and content
 An optional library of encoding and decoding routines, written in C for
 performance. At this stage, only a few select filters are available.
 
-### Status
+## Status
 
-#### Released: PDF::Grammar, PDF, CSS::Declarations.
+### Released: PDF::Grammar, PDF, CSS::Declarations.
 
-#### Pending: PDF::API6, PDF::Lite, PDF::Content
+### Pending: PDF::API6, PDF::Lite, PDF::Content
 
-#### Held Back: Lib::PDF
+### Held Back: Lib::PDF
 
 This module could really do with CPAN Testers style smoke testing. Also
 would like to see more work on Rakudo JIT. It so far implements some of
 the more obvious bottlenecks
 
-#### Experimental: HTML::Canvas::To::PDF, PDF::Style, PDF::Style::Font
+### Experimental: HTML::Canvas::To::PDF, PDF::Style, PDF::Style::Font
 
 These have helped to drive development of the above modules.
 
@@ -202,19 +224,19 @@ back-ends).
 Possibly need a top-down markdown or POD rendering project to pull this all together.
 
 
-### Alternatives
+## Alternatives
 
-#### Cairo
+### Cairo
 
-## 3. PDF Manipulation Modules
+# SECTION II:  PDF Layers
 
-### PDF::Lite
+## PDF (layer I - data)
 
-### PDF::API6
+PDF is the lowest level module. This allows physical access to the PDF for reading, update and writing. 
 
+## PDF::Lite (layer II - graphics)
 
-
-## 4. PDF Graphics
+### Graphics
 
 The [PDF::Content] module implements the PDF Graphics model, including a high-level view of variables and graphics operators.
 
@@ -238,44 +260,31 @@ The [PDF::Content] module implements the PDF Graphics model, including a high-le
 
 
 
-...
-
-## 5. CSS and HTML Flavored Composition
-
-#### PDF::Style
-
-#### HTML::Canvas
-
-#### CSS::Declarations
+## PDF::API6 (layer III - auxiliary)
 
 
 
-## 98 .Low level Modules
+# SECTION III: Supplementary Modules
 
-#### PDF
+## PDF::Style
 
-#### PDF::Grammar
+## HTML::Canvas::To::PDF
 
-#### PDF::Content
-
-#### Lib::PDF
+## CSS::Declarations
 
 
-## 99. Todo
+# SECTION IV: Low Level Modules
 
-#### Fonts
-#### Pod::To::PDF
+## PDF::Grammar
 
-### Experimental Components
+## PDF::Content
 
-As much as anything these modules exist to exercise the rest of the tool-chain
-
-#### PDF::Zen
-
-#### PDF::Render::Cairo
+## Lib::PDF
 
 
-## Appendix: Graphics Operators and Variables
+# APPENDIX: Graphics Operators and Variables
+
+## Appendix I: Graphics
 
 ### Graphic Operators
 
@@ -296,7 +305,7 @@ SetFillRGB(r, g, b) | rg | Same as RG but used for nonstroking operations.
 SetFillCMYK(c, m, y, k) | K | Set the stroking colour space to DeviceCMYK and set the colour to use for stroking operations. Each operand shall be a number between 0.0 (zero concentration) and 1.0 (maximum concentration). The behaviour of this operator is affected by the OverprintMode graphics state.
 SetStrokeRGB(c, m, y, k) | k | Same as K but used for nonstroking operations.
 
-#### Graphics State
+### Graphics State
 
 Method | Code | Description
 --- | --- | ---
@@ -312,7 +321,7 @@ SetRenderingIntent(intent) | ri | Set the colour rendering intent in the graphic
 SetFlatness(flat) | i | Set the flatness tolerance in the graphics state. flatness is a number in the range 0 to 100; 0 specifies the output device’s default flatness tolerance.
 SetGraphics(dictName) | gs | Set the specified parameters in the graphics state. dictName is the name of a graphics state parameter dictionary in the ExtGState resource subdictionary
 
-#### Text Operators
+### Text Operators
 
 Method | Code | Description
 --- | --- | ---
@@ -327,7 +336,7 @@ MoveShowText(string) | ' | Move to the next line and show a text string.
 MoveSetShowText(aw, ac, string) | " | Move to the next line and show a text string, after setting $.WordSpacing to  aw and $.CharSpacing to ac
 ShowSpacetext(array) |  TJ | Show one or more text strings, allowing individual glyph positioning. Each element of array shall be either a string or a number. If the element is a string, show it. If it is a number, adjust the text position by that amount
 
-#### Path Construction
+### Path Construction
 
 Method | Code | Description
 --- | --- | ---
@@ -337,7 +346,7 @@ CurveTo(x1, y1, x2, y2, x3, y3) | c | Append a cubic Bézier curve to the curren
 ClosePath | h | Close the current subpath by appending a straight line segment from the current point to the starting point of the subpath.
 Rectangle(x, y, width, Height) | re | Append a rectangle to the current path as a complete subpath, with lower-left corner (x, y) and dimensions `width` and `height`.
 
-#### Path Painting Operators
+### Path Painting Operators
 
 Method | Code | Description
 --- | --- | ---
@@ -351,7 +360,7 @@ CloseFillStroke() | b | Close, fill, and then stroke the path, using the nonzero
 CloseEOFillStroke() | b* | Close, fill, and then stroke the path, using the even-odd rule to determine the region to fill.
 EndPath() | n | End the path object without filling or stroking it. This operator shall be a path-painting no-op, used primarily for the side effect of changing the current clipping path.
 
-#### Path Clipping
+### Path Clipping
 
 Method | Code | Description
 --- | --- | ---
@@ -387,7 +396,6 @@ LineWidth | w | Stroke line-width | 1.0 | .LineWidth = 2.5
 StrokeAlpha | CA | The constant shape or constant opacity value to be used when paths are stroked | 1.0 | .StrokeAlpha = 0.5;
 StrokeColor| | current stroke colorspace and color | :DeviceGray[0.0] | .StrokeColor = :DeviceRGB[.7,.2,.2]
 
-
 #### General Graphics - Advanced
 
 Accessor | Code | Description | Default
@@ -407,4 +415,18 @@ SoftMask | SMask | A soft-mask dictionary specifying the mask shape or mask opac
 StrokeAdjust | SA | A flag specifying whether to compensate for possible rasterization effects when stroking a path with a line | false
 TransferFunction | TR2 |  A function that adjusts device gray or colour component levels to compensate for nonlinear response in a particular output device
 UndercolorRemovalFunction | UCR2 | A function that calculates the reduction in the levels of the cyan, magenta, and yellow colour components to compensate for the amount of black added by black generation
+
+## Appendix II: TODO
+
+### Fonts
+### Pod::To::PDF
+
+## Appendix III: Experimental Components
+
+As much as anything these modules exist to exercise the rest of the tool-chain
+
+### PDF::Zen
+
+### PDF::Render::Cairo
+
 
