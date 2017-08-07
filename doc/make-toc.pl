@@ -11,7 +11,7 @@ sub MAIN(Str $md-file = "perl6-pdf-toolchain.md", Int :$min-level=1, Int :$max-l
 
     for @<waffle> {
         for .lines {
-            if /:s^ $<hdr>='#'+ $<text>=.*?  $/ {
+            if /:s^$<hdr>='#'+ $<text>=.*?  $/ {
                 my UInt $level = $<hdr>.chars;
 
                 if $min-level <= $level <= $max-level {
