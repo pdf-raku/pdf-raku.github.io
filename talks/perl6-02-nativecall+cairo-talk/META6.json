@@ -1,0 +1,15 @@
+{
+    "perl"        : "6.c",
+    "name"        : "DW::Talk::Natives",
+    "tags"        : ["c", "binary", "native" ], 
+    "version"     : "0.0.1",
+    "auth"        : "github:p6-pdf",
+    "description" : "A quick talk on Natives and NativeCall",
+    "depends"     : [ "OpenSSL" ],
+    "source-url"  : "git://github.com/p6-pdf/perl6-Native-Packing.git",
+    "provides"    : {
+
+        "Native::Packing" : "lib/Native/Packing.pm"
+
+     }
+}
