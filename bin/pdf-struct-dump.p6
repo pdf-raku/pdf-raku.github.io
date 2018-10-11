@@ -22,6 +22,13 @@ my $*class-map;
 my StandardTag %*role-map;
 my NumberTree $*parent-tree;
 
+sub html-escape(Str $_) {
+    .trans:
+        /\&/ => '&amp;',
+        /\</ => '&lt;',
+        /\>/ => '&gt;',
+}
+
 sub MAIN(Str $infile,           #= input PDF
 	 Str :$password = '',   #= password for the input PDF, if encrypted
          Number :$page,         #= page to dump
@@ -237,7 +244,7 @@ multi sub dump-struct(PDF::StructElem $node, :$tags is copy = %(), :$depth is co
                     unless $name eq 'Span';
                 }
                 else {
-                    say pad($depth, $name eq 'Span' ?? $_ !! "<$name$att>$_</$name>")
+                    say pad($depth, $name eq 'Span' ?? $_ !! "<$name$att>{html-escape($_) }</$name>")
                 }
             }
         }
@@ -333,7 +340,8 @@ multi sub dump-struct($_, :$tags, :$depth) is default {
 }
 
 sub dump-tag(PDF::Content::Tag $tag, :$depth! is copy) {
-    say pad($depth, $tag.children.map(*.gist).join: '');
+    my $text = html-escape($tag.children.map(*.gist).join: '');
+    say pad($depth, $text);
 }
 
 =begin pod

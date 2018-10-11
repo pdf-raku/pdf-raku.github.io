@@ -25,7 +25,7 @@ Table-11-CCITTFax_filter_params.html :
 Table-15-File_trailer_entries.html :
 	${MAKE_TABLE} --page=51 $(PDF_SPEC) > $@
 
-Table-16-Object_stream_dict_entries.html :
+Table-16-Object_stream_entries.html :
 	${MAKE_TABLE} --page=54 $(PDF_SPEC) > $@
 
 Table-17-Cross_reference_stream_dict_entries.html :
