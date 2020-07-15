@@ -42,10 +42,8 @@ INIT {
 
         for class-glob(.split('/')) -> $here {
             $path ~= '/' ~ $here;
-            if ++$n == 1 {
-                $path ~= '-raku';
-            }
-            say " $sep [{$here}]({$path})";
+            my $pretty = $here.subst(/'-raku'$/,'').subst('-', '::');
+            say " $sep [{$pretty}]({$path})";
             $sep = '::';
         }
     }
