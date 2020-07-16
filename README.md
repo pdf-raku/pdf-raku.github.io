@@ -7,7 +7,7 @@ Raku PDF Module Overview
 
 Suitable for simple graphics and PDF construction
 
-#### [PDI::API6](https://pdf-raku.github.io/PDF-API6/) - Advanced Manipulation
+#### [PDF::API6](https://pdf-raku.github.io/PDF-API6/) - Advanced Manipulation
 
 Fully Featured API, including Outlines, Advanced Colors, Interactive Forms, Settings and Metadata.
 
