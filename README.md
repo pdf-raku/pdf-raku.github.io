@@ -24,7 +24,8 @@ and PDF::API6
 #### [PDF::Grammar](https://pdf-raku.github.io/PDF-Grammar-raku/) - PDF Content related grammars
 #### [Font::AFM](https://pdf-raku.github.io/Font-AFM-raku/) - AFM Font Metrics for Type-1 and core fonts
 #### [Font::FreeType](https://pdf-raku.github.io/Font-FreeType-raku/) - FreeType font-library bindings
-
+#### [PDF::Tags](https://pdf-raku.github.io/PDF-Tags-raku/) - Tagged PDF and Marked Content
+#### [PDF::ISO_32000](https://pdf-raku.github.io/PDF-ISO_32000-raku/) - Mined resources from the PDF specification
 
 ### Unreleased
 
@@ -33,7 +34,4 @@ and PDF::API6
 Suitable for the creation, reading and editing of FDF
 (Forms Data Format) files
 
-#### [PDF::Tags](https://pdf-raku.github.io/PDF-Tags-raku/) - Tagged PDF and Marked Content
-
-Reading and creation of Tagged PDF structure elements
 
