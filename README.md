@@ -29,9 +29,4 @@ Module | Description | Compatiblity
 #### [Font::FreeType](https://pdf-raku.github.io/Font-FreeType-raku/) - FreeType font-library bindings
 #### [PDF::ISO_32000](https://pdf-raku.github.io/PDF-ISO_32000-raku/) - Mined resources from the PDF specification
 
-### Unreleased
-
-Suitable for the creation, reading and editing of FDF
-(Forms Data Format) files
-
 
