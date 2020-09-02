@@ -7,7 +7,7 @@ constant DocRoot = "https://pdf-raku.github.io";
 # -- Projects with docs/ folder --
 multi sub resolve-class(@path ( 'PDF', 'Tags', *@)) { %( :repo<PDF-Tags-raku>, :@path ) }
 multi sub resolve-class(@path ( 'FDF', *@)) { %( :repo<FDF-raku>, :@path ) }
-multi sub resolve-class(@ ( 'Font', 'FreeType', *@path)) { %( :repo<Font-FreeType-raku>, :@path ) }
+multi sub resolve-class(@path ( 'Font', 'FreeType', *@)) { %( :repo<Font-FreeType-raku>, :@path ) }
 
 # -- Projects with top-level README --
 multi sub resolve-class(@ ( 'PDF', 'API6', *@path)) { %( :repo<PDF-API6> ) }
