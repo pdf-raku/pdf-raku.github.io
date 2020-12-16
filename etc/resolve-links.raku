@@ -8,6 +8,7 @@ constant DocRoot = "https://pdf-raku.github.io";
 multi sub resolve-class(@path ( 'PDF', 'Tags', *@)) { %( :repo<PDF-Tags-raku>, :@path ) }
 multi sub resolve-class(@path ( 'FDF', *@)) { %( :repo<FDF-raku>, :@path ) }
 multi sub resolve-class(@path ( 'Font', 'FreeType', *@)) { %( :repo<Font-FreeType-raku>, :@path ) }
+multi sub resolve-class(@path ( 'HarfBuzz', *@)) { %( :repo<HarfBuzz-raku>, :@path ) }
 
 # -- Projects with top-level README --
 multi sub resolve-class(@ ( 'PDF', 'API6', *@path)) { %( :repo<PDF-API6> ) }
@@ -64,4 +65,4 @@ INIT {
     }
 }
 
-s:g:s/ '](' ([PDF|FDF|Font]['::'*%%<[a..z A..Z 0..9 _ -]>+]) ')'/{'](' ~ link-to-url($0) ~ ')'}/;
+s:g:s/ '](' ([PDF|FDF|Font|HarfBuzz]['::'*%%<[a..z A..Z 0..9 _ -]>+]) ')'/{'](' ~ link-to-url($0) ~ ')'}/;
