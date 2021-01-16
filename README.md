@@ -28,6 +28,11 @@ Module | Description | Compatiblity
 #### [PDF::Grammar](https://pdf-raku.github.io/PDF-Grammar-raku/) - PDF-related grammars
 #### [Font::AFM](https://pdf-raku.github.io/Font-AFM-raku/) - AFM Font Metrics for Type-1 and core fonts
 #### [Font::FreeType](https://pdf-raku.github.io/Font-FreeType-raku/) - FreeType font-library bindings
-#### [PDF::ISO_32000](https://pdf-raku.github.io/PDF-ISO_32000-raku/) - Mined resources from the PDF specification
+#### [PDF::ISO_32000](https://pdf-raku.github.io/PDF-ISO_32000-raku/) - Mined resources from the PDF specification, including an [XML Dump of ISO-32000 1](https://raw.githack.com/pdf-raku/PDF-ISO_32000-raku/master/gen/PDF-ISO_32000.xml)
+
+### Experimental
+
+#### [HarfBuzz::Subset](https://pdf-raku.github.io/HarfBuzz-Subset-raku/) - Font subsetting for [PDF::Font::Loader](https://pdf-raku.github.io/PDF-Font-Loader-raku/)
+
 
 
