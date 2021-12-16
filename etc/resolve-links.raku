@@ -2,18 +2,15 @@ constant DocRoot = "https://pdf-raku.github.io";
 
 # Map to the best documentation source
 
-# -- Projects with docs/ folder --
 multi sub resolve-class(*@path ( 'PDF', 'Tags', *@)) { %( :repo<PDF-Tags-raku>, :@path ) }
 multi sub resolve-class(*@path ( 'FDF', *@)) { %( :repo<FDF-raku>, :@path ) }
 multi sub resolve-class(*@path ( 'Font', 'FreeType', *@)) { %( :repo<Font-FreeType-raku>, :@path ) }
+multi sub resolve-class(*@ ('PDF', 'Font', 'Loader', 'CSS', *@)) { %( :repo<PDF-Font-Loader-CSS-raku> ) }
 multi sub resolve-class(*@path ('PDF', 'Font', 'Loader', *@)) { %( :repo<PDF-Font-Loader-raku>, :@path ) }
 
-# -- Projects with top-level README --
 multi sub resolve-class('PDF', 'API6', *@path) { %( :repo<PDF-API6> ) }
 my subset PDFModule of Str where 'Content'|'Grammar'|'Lite';
 multi sub resolve-class(*@ ('PDF', PDFModule $mod, *@path)) { %( :repo("PDF-{$mod}-raku") ) }
-multi sub resolve-class('PDF', 'Grammer', *@path) { %( :repo<PDF-Grammer-raku> ) }
-multi sub resolve-class('PDF', 'Lite', *@path) { %( :repo<PDF-Lite-raku> ) }
 multi sub resolve-class('PDF') { %( :repo<PDF-raku> )}
 multi sub resolve-class(*@ ('PDF', $p1 where 'COS'|'IO', *@path)) { %( :repo<PDF-raku> )}
 multi sub resolve-class('PDF', *@path) { %( :repo<PDF-Class-raku> )}
