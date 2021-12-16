@@ -15,8 +15,7 @@ H3               { font-size: 1.17em; margin: .83em 0 }
 H4, P, Blockquote, Form { margin: 1.12em 0 }
 H5               { font-size: .83em; margin: 1.5em 0 }
 H6               { font-size: .75em; margin: 1.67em 0 }
-L                { margin-top: 0; margin-bottom: 0 }
-LI               { margin-left: 40px }
+L                { margin-top: 0; margin-bottom: 0; }
 NonStruct        { display: none }
 Quote, Reference { font-style: italic }
 RT, WT           { font-size: smaller }
@@ -27,7 +26,8 @@ TFoot            { display: table-footer-group }
 TH               { font-weight: bolder; text-align: center }
 THead            { display: table-header-group }
 THead, TBody, TFoot { vertical-align: middle }
-TOCI, LI         { display: list-item }
+TOCI, LI       {  margin-left: 40px; display: list-item; list-style-type: none;}
+Lbl, LBody, LBody P { display: inline }
 TR               { display: table-row }
 Table            { display: table }
 
