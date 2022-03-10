@@ -17,7 +17,8 @@ Fully Featured API, including Outlines, Advanced Colors, Interactive Forms, Sett
 Module | Description | Compatiblity
 -------|-------------|------------
 [PDF::Font::Loader](https://pdf-raku.github.io/PDF-Font-Loader-raku/)|Loads True-Type (`*.ttf`), OpenType (`*.otf`) and Type-1 (`*.pfb`) files.|[PDF::Lite](https://pdf-raku.github.io/PDF-Lite-raku/), [PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)
-[PDF::Tags](https://pdf-raku.github.io/PDF-Tags-raku/)|Tagged PDF reading and writing|[PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)
+[PDF::Tags](https://pdf-raku.github.io/PDF-Tags-raku/)|Tagged PDF writing|[PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)
+[PDF::Tags::Reader](https://pdf-raku.github.io/PDF-Tags-Reader-raku/)|Tagged PDF reading|[PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)
 [HTML::Canvas::To::PDF](https://pdf-raku.github.io/HTML-Canvas-To-PDF-raku/) | HTML 5 Canvas renderer |[PDF::Lite](https://pdf-raku.github.io/PDF-Lite-raku/), [PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)
 
 ### Tool-chain Modules
