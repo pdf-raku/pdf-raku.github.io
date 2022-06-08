@@ -34,10 +34,17 @@ sub link-to-url(Str() $class-name) {
 }
 
 sub breadcrumb(Str $url is copy, @path, UInt $n = +@path, :$top) {
-    my $name = $top ?? @path[0 ..^ $n].join('::') !! @path[$n-1];
-    $url ~= '/' ~ @path[0 ..^ $n].join('/');
+    my @subpath =  @path[0 ..^ $n];
+    my $subdir =  @subpath.join('/');
+    my $name = $top ?? @subpath.join('::') !! @path[$n-1];
     my $sep = $top ?? '/' !! '::';
-    say " $sep [$name]($url)";
+    if "lib/{$subdir}.rakumod".IO.e {
+        $url ~= '/' ~ $subdir;
+        say " $sep [$name]($url)";
+    }
+    else {
+        say " $sep $name";
+    }
 }
 
 INIT {
