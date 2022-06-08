@@ -1,19 +1,24 @@
 constant DocRoot = "https://pdf-raku.github.io";
 
 # Map to the best documentation source
+my subset PDFModule of Str where 'Content'|'Grammar'|'Lite';
+my subset PDFCore of Str where 'COS'|'IO';
 
+multi sub resolve-class(*@path ( 'PDF', 'Tags', 'Reader', *@)) { %( :repo<PDF-Tags-Reader-raku>, :@path ) }
 multi sub resolve-class(*@path ( 'PDF', 'Tags', *@)) { %( :repo<PDF-Tags-raku>, :@path ) }
-multi sub resolve-class(*@path ( 'FDF', *@)) { %( :repo<FDF-raku>, :@path ) }
+multi sub resolve-class(*@path ( 'PDF', 'Native', *@)) { %( :repo<PDF-Native-raku>, :@path ) }
 multi sub resolve-class(*@path ( 'Font', 'FreeType', *@)) { %( :repo<Font-FreeType-raku>, :@path ) }
 multi sub resolve-class(*@ ('PDF', 'Font', 'Loader', 'CSS', *@)) { %( :repo<PDF-Font-Loader-CSS-raku> ) }
 multi sub resolve-class(*@path ('PDF', 'Font', 'Loader', *@)) { %( :repo<PDF-Font-Loader-raku>, :@path ) }
 
 multi sub resolve-class('PDF', 'API6', *@path) { %( :repo<PDF-API6> ) }
-my subset PDFModule of Str where 'Content'|'Grammar'|'Lite';
 multi sub resolve-class(*@ ('PDF', PDFModule $mod, *@path)) { %( :repo("PDF-{$mod}-raku") ) }
 multi sub resolve-class('PDF') { %( :repo<PDF-raku> )}
-multi sub resolve-class(*@ ('PDF', $p1 where 'COS'|'IO', *@path)) { %( :repo<PDF-raku> )}
+multi sub resolve-class('PDF', PDFCore, *@) { %( :repo<PDF-raku> )}
 multi sub resolve-class('PDF', *@path) { %( :repo<PDF-Class-raku> )}
+
+multi sub resolve-class(*@path ( 'FDF', *@)) { %( :repo<FDF-raku>, :@path ) }
+multi sub resolve-class(*@ ( 'FontConfig', *@)) { %( :repo<FontConfig> ) }
 
 multi sub resolve-class(*@p) {
     warn "unknown path: {@p}";
@@ -30,7 +35,7 @@ sub link-to-url(Str() $class-name) {
 
 sub breadcrumb(Str $url is copy, @path, UInt $n = +@path, :$top) {
     my $name = $top ?? @path[0 ..^ $n].join('::') !! @path[$n-1];
-    $url ~= '/' ~ @path[0..^ $n].join('/');
+    $url ~= '/' ~ @path[0 ..^ $n].join('/');
     my $sep = $top ?? '/' !! '::';
     say " $sep [$name]($url)";
 }
