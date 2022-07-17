@@ -14,7 +14,7 @@ Fully Featured API, including Outlines, Advanced Colors, Interactive Forms, Sett
 
 ### Extension Modules
 
-Module | Description | Compatiblity
+Module | Description | Compatibility
 -------|-------------|------------
 [PDF::Font::Loader](https://pdf-raku.github.io/PDF-Font-Loader-raku/)|Loads True-Type (`*.ttf`), OpenType (`*.otf`) and Type-1 (`*.pfb`) files.|[PDF::Lite](https://pdf-raku.github.io/PDF-Lite-raku/), [PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)
 [PDF::Tags](https://pdf-raku.github.io/PDF-Tags-raku/)|Tagged PDF writing|[PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)

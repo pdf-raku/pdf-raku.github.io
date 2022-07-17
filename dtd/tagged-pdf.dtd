@@ -10,7 +10,7 @@
 <!ENTITY % Block "BlockQuote|Caption|Figure|Form|Formula|Index|L|P|TOC|Table">
 <!ENTITY % DocFrag "Art|Div|Document|Part|Sect">
 <!ENTITY % Hdr "H|H1|H2|H3|H4|H5|H6">
-<!ENTITY % Inline "Annot|BibEntry|Code|Formula|H1|H2|H3|H4|H5|H6|L|LBody|LI|Lbl|Link|Note|P|Quote|Reference|Ruby|Span|Table|Warichu">
+<!ENTITY % Inline "#PCDATA|Annot|BibEntry|Code|Formula|H|H1|H2|H3|H4|H5|H6|L|LBody|LI|Lbl|Link|Note|P|Quote|Reference|Ruby|Span|Table|Warichu">
 <!ENTITY % StructMisc "NonStruct|Private">
 <!ENTITY % SubPart "Art|Div|Sect">
 <!ENTITY % attsAny "
@@ -69,7 +69,7 @@
 <!ENTITY % attsTable "
 	Summary CDATA #IMPLIED">
 
-<!ELEMENT Annot (#PCDATA|%Inline;)*>
+<!ELEMENT Annot (%Inline;)*>
 <!ATTLIST Annot %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT Art (%Block;|%Hdr;|Div|LBody|LI|Lbl|Sect)*>
@@ -78,10 +78,10 @@
 <!ELEMENT BlockQuote (%Hdr;|%SubPart;|Caption|Figure|Formula|L|LBody|LI|Lbl|P|Table)*>
 <!ATTLIST BlockQuote %attsAny;>
 
-<!ELEMENT Caption (#PCDATA|%Inline;)*>
+<!ELEMENT Caption (%Inline;)*>
 <!ATTLIST Caption %attsAny;>
 
-<!ELEMENT Code (#PCDATA|%Inline;)*>
+<!ELEMENT Code (%Inline;)*>
 <!ATTLIST Code %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT Div (%Block;|%Hdr;|%SubPart;|LBody|LI|Lbl)*>
@@ -96,55 +96,55 @@
 <!ELEMENT Form (EMPTY)*>
 <!ATTLIST Form %attsAny;>
 
-<!ELEMENT Formula (#PCDATA|%Inline;)*>
+<!ELEMENT Formula (%Inline;)*>
 <!ATTLIST Formula %attsAny;>
 
-<!ELEMENT H (#PCDATA|%Inline;)*>
-<!ATTLIST H %attsAny;>
+<!ELEMENT H (%Inline;)*>
+<!ATTLIST H %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H1 (#PCDATA|%Inline;)*>
+<!ELEMENT H1 (%Inline;)*>
 <!ATTLIST H1 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H2 (#PCDATA|%Inline;)*>
+<!ELEMENT H2 (%Inline;)*>
 <!ATTLIST H2 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H3 (#PCDATA|%Inline;)*>
+<!ELEMENT H3 (%Inline;)*>
 <!ATTLIST H3 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H4 (#PCDATA|%Inline;)*>
+<!ELEMENT H4 (%Inline;)*>
 <!ATTLIST H4 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H5 (#PCDATA|%Inline;)*>
+<!ELEMENT H5 (%Inline;)*>
 <!ATTLIST H5 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H6 (#PCDATA|%Inline;)*>
+<!ELEMENT H6 (%Inline;)*>
 <!ATTLIST H6 %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT Index (%Hdr;|L|LBody|LI|Lbl|P|Table)*>
 <!ATTLIST Index %attsAny;>
 
-<!ELEMENT L (#PCDATA|%Inline;|Caption)*>
+<!ELEMENT L (%Inline;|Caption)*>
 <!ATTLIST L %attsAny; %attsBLSE; %attsILSE; %attsList;>
 
-<!ELEMENT LBody (#PCDATA|%Inline;|Figure)*>
+<!ELEMENT LBody (%Inline;|Figure)*>
 <!ATTLIST LBody %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT LI (#PCDATA|%Inline;)*>
+<!ELEMENT LI (%Inline;)*>
 <!ATTLIST LI %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Lbl (#PCDATA|%Inline;)*>
+<!ELEMENT Lbl (%Inline;)*>
 <!ATTLIST Lbl %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Link (#PCDATA|%Inline;)*>
+<!ELEMENT Link (%Inline;)*>
 <!ATTLIST Link %attsAny; %attsBLSE; %attsILSE; href CDATA #IMPLIED>
 
 <!ELEMENT NonStruct (%DocFrag;|%Hdr;|%StructMisc;|BlockQuote|Caption|Index|L|LBody|LI|Lbl|P|TOC|TOCI|Table)*>
 <!ATTLIST NonStruct %attsAny;>
 
-<!ELEMENT Note (#PCDATA|%Inline;)*>
+<!ELEMENT Note (%Inline;)*>
 <!ATTLIST Note %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT P (#PCDATA|%Inline;|Figure|Form)*>
+<!ELEMENT P (%Inline;|Figure|Form)*>
 <!ATTLIST P %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT Part (%Block;|%Hdr;|%SubPart;|LBody|LI|Lbl)*>
@@ -153,7 +153,7 @@
 <!ELEMENT Private (%DocFrag;|%Hdr;|%StructMisc;|BlockQuote|Caption|Index|L|LBody|LI|Lbl|P|TOC|TOCI|Table)*>
 <!ATTLIST Private %attsAny;>
 
-<!ELEMENT Quote (#PCDATA|%Inline;)*>
+<!ELEMENT Quote (%Inline;)*>
 <!ATTLIST Quote %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT RB (#PCDATA|Span)*>
@@ -165,7 +165,7 @@
 <!ELEMENT RT (#PCDATA|Span)*>
 <!ATTLIST RT %attsAny; %attsRuby;>
 
-<!ELEMENT Reference (#PCDATA|%Inline;)*>
+<!ELEMENT Reference (%Inline;)*>
 <!ATTLIST Reference %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT Ruby (RB|RP|RT)*>
@@ -174,19 +174,19 @@
 <!ELEMENT Sect (%Block;|%Hdr;|%SubPart;|LBody|LI|Lbl)*>
 <!ATTLIST Sect %attsAny; %attsCols;>
 
-<!ELEMENT Span (#PCDATA|%Inline;)*>
+<!ELEMENT Span (%Inline;)*>
 <!ATTLIST Span %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT TBody (TR)*>
 <!ATTLIST TBody %attsAny;>
 
-<!ELEMENT TD (#PCDATA|%Inline;|Figure|Form)*>
+<!ELEMENT TD (%Inline;|Figure|Form)*>
 <!ATTLIST TD %attsAny; %attsCell;>
 
 <!ELEMENT TFoot (TR)*>
 <!ATTLIST TFoot %attsAny;>
 
-<!ELEMENT TH (#PCDATA|%Inline;)*>
+<!ELEMENT TH (%Inline;)*>
 <!ATTLIST TH %attsAny; %attsCell;>
 
 <!ELEMENT THead (TR)*>
@@ -201,7 +201,7 @@
 <!ELEMENT TR (TD|TH)*>
 <!ATTLIST TR %attsAny;>
 
-<!ELEMENT Table (#PCDATA|%Inline;|Caption|TBody|TFoot|THead|TR)*>
+<!ELEMENT Table (%Inline;|Caption|TBody|TFoot|THead|TR)*>
 <!ATTLIST Table %attsAny; %attsBLSE; %attsILSE; %attsTable;>
 
 <!ELEMENT WP (#PCDATA|Span)*>

@@ -1,7 +1,7 @@
 module DtD {
     # resources take from the ISO-32000 PDF specification
-    constant BLSE    = set <P H1 H2 H3 H4 H5 H6 L LI Lbl LBody Table>;
-    constant ILSE    = set <Span Quote Note Reference BibEntry Code Link Annot Ruby Warichu>;
+    constant BLSE    = set <P H H1 H2 H3 H4 H5 H6 L LI Lbl LBody Table>;
+    constant ILSE    = set <Span Quote Note Reference BibEntry Code Link Annot Ruby Warichu #PCDATA>;
     constant GROUP   = set <Document Part Art Sect Div BlockQuote Caption TOC TOCI Index NonStruct Private>;
     constant WARICHU = set <WT WP>;
     constant RUBY    = set <RB RT RP>;
@@ -13,7 +13,7 @@ module DtD {
             for $d.lines.skip {
                 my ($elems, $desc, $parents, $kids) = .split: "\t";
                 my @parents = $parents
-                    .subst('H1–H6', {('H1'..'H6').join: ', '})
+                    .subst('H1–H6', {('H', slip 'H1'..'H6').join: ', '})
                     .split(", ");
                 my @kids = $kids.split(", ")
                             if $kids.defined && $kids ~~ /^[<alnum>+] * % ', '$/;
@@ -31,14 +31,14 @@ module DtD {
         }
         # vivify inline elements
         for %ents<Inline>.Slip {
-            %elems{$_}<#PCDATA>++;
+         ##   %elems{$_}<#PCDATA>++;
             %elems{$_}<%Inline;>++;
         }
 
         # Populate some elements no specifically covered in the CSV files
         %elems<Warichu>{$_}++ for WARICHU.keys;
         %elems<Ruby>{$_}++ for RUBY.keys;
-        %elems{$_}<Span>++ for WARICHU.keys.Slip, RUBY.keys.Slip;
+        %elems{$_}{'Span'|'#PCDATA'}++ for WARICHU.keys.Slip, RUBY.keys.Slip;
         for GROUP.keys -> $grp {
             for BLSE.keys -> $blk {
                 %elems{$grp}{$blk}++;
@@ -51,7 +51,7 @@ module DtD {
         %elems{$_}<%Inline;>++ for <H Lbl TH TD Caption>;
 
         for %elems.values {
-            .<#PCDATA>++ if (.<Span>:exists) || (.<%Inline;>:exists);
+##            .<#PCDATA>++ if (.<Span>:exists) || (.<%Inline;>:exists);
             $_ ||= %( :EMPTY );
         }
         %elems;
@@ -139,7 +139,7 @@ module DtD {
 
 }
 
-our %ents = :Hdr<H1 H2 H3 H4 H5 H6>,
+our %ents = :Hdr<H H1 H2 H3 H4 H5 H6>,
             :SubPart<Art Sect Div>,
             :Inline(
                 <Span Quote Note Reference Code Link Annot Formula>.Slip,
