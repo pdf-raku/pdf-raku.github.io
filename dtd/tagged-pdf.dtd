@@ -62,6 +62,11 @@
 	RubyName (Start|Center|End|Justify|Distribute) 'Distribute'
 	RubyPosition (Before|After|Warichu|Inline) 'Before'
 	GlyphOrientationVertical CDATA #IMPLIED">
+<!ENTITY % attsIllustration "
+	BBox CDATA #IMPLIED
+	Width CDATA #IMPLIED
+	Height CDATA #IMPLIED
+	BaselineShift CDATA #IMPLIED">
 <!ENTITY % attsList "
 	ListNumbering (None|Disc|Circle|Square|Decimal|UpperRoman|LowerRoman|UpperAlpha|LowerAlpha) 'None'">
 <!ENTITY % attsRuby "
@@ -91,13 +96,13 @@
 <!ATTLIST Document %attsAny;>
 
 <!ELEMENT Figure (EMPTY)*>
-<!ATTLIST Figure %attsAny;>
+<!ATTLIST Figure %attsAny; %attsIllustration;>
 
 <!ELEMENT Form (EMPTY)*>
-<!ATTLIST Form %attsAny;>
+<!ATTLIST Form %attsAny; %attsIllustration;>
 
 <!ELEMENT Formula (%Inline;)*>
-<!ATTLIST Formula %attsAny;>
+<!ATTLIST Formula %attsAny; %attsIllustration;>
 
 <!ELEMENT H (%Inline;)*>
 <!ATTLIST H %attsAny; %attsBLSE; %attsILSE;>

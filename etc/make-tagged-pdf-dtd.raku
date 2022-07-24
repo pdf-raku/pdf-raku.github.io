@@ -205,6 +205,13 @@ DtD::reconcile(%elems, %ents);
     "TBorderStyle CDATA #IMPLIED",
     "TPadding CDATA #IMPLIED",
 ).join: "\n\t";
+%ents<attsIllustration> = (
+    "",
+    "BBox CDATA #IMPLIED",
+    "Width CDATA #IMPLIED",
+    "Height CDATA #IMPLIED",
+    "BaselineShift CDATA #IMPLIED",
+).join: "\n\t";
 %ents<attsCols> = (
     "",
     "ColumnCount CDATA #IMPLIED",
@@ -231,6 +238,7 @@ my %atts;
 %atts<L>.push: '%attsList;', for <L>;
 %atts{$_}.push: '%attsCell;' for <TH TD>;
 %atts{$_}.push: '%attsRuby;' for DtD::RUBY.keys;
+%atts{$_}.push: '%attsIllustration;' for <Figure Formula Form>;
 %atts<Link>.push: 'href CDATA #IMPLIED';
 %atts<Table>.push: '%attsTable;' for <Table TR TH TD THead TBody TFoot>;
 
