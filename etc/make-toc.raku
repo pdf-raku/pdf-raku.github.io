@@ -1,6 +1,8 @@
 use v6;
 
 # quick and dirty markdown TOC generator
+# To seed the table of contents, place the line
+# '- Toc here' somehwere near the top of the markdown file
 
 sub text-to-anchor(Str() $text) {
     my $anchor = ~$text.lc;
@@ -9,7 +11,7 @@ sub text-to-anchor(Str() $text) {
     $anchor;
 }
 
-sub MAIN(Str $md-file = "perl6-pdf-toolchain.md", Int :$min-level=1, Int :$max-level = 3) {
+sub MAIN(Str:D $md-file, Int :$min-level=1, Int :$max-level = 3) {
     my Bool $code = False;
     my $doc = $md-file.IO.slurp;
 
@@ -19,35 +21,41 @@ sub MAIN(Str $md-file = "perl6-pdf-toolchain.md", Int :$min-level=1, Int :$max-l
     $doc  ~~ /^ $<waffle>=.*? +%% ["```" \n? $<code>=.*? "```" \n?] $/
          or die "$md-file parse failed";
 
-    for @<waffle> {
-        for .lines {
-            if /:s^$<hdr>='#'+ $<text>=.*?  $/ {
-                my UInt $level = $<hdr>.chars;
-                my Str:D $text = ~$<text>;
-                my $anchor = text-to-anchor($text);
+    my @toc = gather {
+        for @<waffle> {
+            for .lines {
+                if /:s^$<hdr>='#'+ $<text>=.*?  $/ {
+                    my UInt $level = $<hdr>.chars;
+                    my Str:D $text = ~$<text>;
+                    my $anchor = text-to-anchor($text);
 
-                with %anchors{$anchor} {
-                    warn "duplicate anchor: \#$anchor";
+                    with %anchors{$anchor} {
+                        warn "duplicate anchor: \#$anchor";
+                    }
+                    else {
+                        $_ = $text;
+                    }
+
+                    if $min-level <= $level <= $max-level {
+                        my $indent = ' ' xx (2 * ($level-1));
+                        take '%s- [%s](#%s)'.sprintf($indent,$text,$anchor)
+                            unless $anchor eq 'table-of-contents';
+                    }
                 }
                 else {
-                    $_ = $text;
-                }
-
-                if $min-level <= $level <= $max-level {
-                    my $indent = ' ' xx (2 * ($level-1));
-                    say '%s- [%s](#%s)'.sprintf($indent,$text,$anchor)
-                        unless $anchor eq 'table-of-contents';
-                }
-            }
-            else {
-                if m/'](#' ~ ')' $<ref>=.*? / {
-                    %refs{$<ref>}++;
+                    if m/'](#' ~ ')' $<ref>=.*? / {
+                        %refs{$<ref>}++;
+                    }
                 }
             }
         }
     }
 
+   # do the doc subsitution
+   print $doc.subst(/^^[[\s*"-"\N*\n]+]/, @toc.join: "\n");
+
    for %refs.keys.grep({!(%anchors{$_}:exists)}) {
        warn "unresolved internal reference: \#$_";
    }
+
 }
