@@ -51,11 +51,12 @@ sub MAIN(Str:D $md-file, Int :$min-level=1, Int :$max-level = 3) {
         }
     }
 
-   # do the doc subsitution
-   print $doc.subst(/^^[[\s*"-"\N*\n]+]/, @toc.join: "\n");
+    # do the doc subsitution
+    @toc.push: '';
+    print $doc.subst(/^^[[\s*"-"\N*\n]+]/, @toc.join: "\n");
 
-   for %refs.keys.grep({!(%anchors{$_}:exists)}) {
-       warn "unresolved internal reference: \#$_";
-   }
+    for %refs.keys.grep({!(%anchors{$_}:exists)}) {
+        warn "unresolved internal reference: \#$_";
+    }
 
 }
