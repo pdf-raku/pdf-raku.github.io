@@ -20,6 +20,7 @@ Module | Description | Compatibility
 [PDF::Tags](https://pdf-raku.github.io/PDF-Tags-raku/)|Tagged PDF writing|[PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)
 [PDF::Tags::Reader](https://pdf-raku.github.io/PDF-Tags-Reader-raku/)|Tagged PDF reading|[PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)
 [HTML::Canvas::To::PDF](https://pdf-raku.github.io/HTML-Canvas-To-PDF-raku/) | HTML 5 Canvas renderer |[PDF::Lite](https://pdf-raku.github.io/PDF-Lite-raku/), [PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)
+[PDF::To::Cairo](https://pdf-raku.github.io/PDF-To-Cairo-raku/) | Experimental PDF rendering via Cairo  |[PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)
 [PDF::Native](https://pdf-raku.github.io/PDF-Native-raku/)|Functions rewritten in C (for performance).|[PDF](https://pdf-raku.github.io/PDF-raku/), [PDF::Lite](https://pdf-raku.github.io/PDF-Lite-raku/), [PDF::API6](https://pdf-raku.github.io/PDF-API6/) and [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/)
 
 ### Tool-chain Modules
