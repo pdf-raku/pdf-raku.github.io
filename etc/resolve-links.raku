@@ -28,6 +28,7 @@ multi sub resolve-class('PDF', *@path) { %( :repo<PDF-Class-raku> )}
 
 multi sub resolve-class(*@path ( 'HarfBuzz', 'Subset', *@)) { %( :repo<HarfBuzz-Subset-raku>, :@path ) }
 multi sub resolve-class(*@ ( 'HarfBuzz', 'Shaper', 'Cairo', *@)) { %( :repo<HarfBuzz-Shaper-Cairo-raku> ) }
+multi sub resolve-class(*@path ( 'HarfBuzz', 'Font', 'Cairo', *@)) { %( :repo<HarfBuzz-Shaper-Cairo-raku>, :@path ) }
 multi sub resolve-class(*@ ( 'HarfBuzz', 'Font', 'FreeType', *@)) { %( :repo<HarfBuzz-Font-FreeType-raku> ) }
 multi sub resolve-class(*@path ( 'HarfBuzz', *@)) { %( :repo<HarfBuzz-raku>, :@path ) }
 
