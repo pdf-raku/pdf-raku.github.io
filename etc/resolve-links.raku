@@ -1,8 +1,17 @@
-constant DocRoot = "https://pdf-raku.github.io";
+constant PDFRoot = "https://pdf-raku.github.io";
+constant HarfBuzzRoot = "https://harfbuzz-raku.github.io";
 
 # Map to the best documentation source
 my subset PDFModule of Str where 'Content'|'Grammar'|'Lite';
 my subset PDFCore of Str where 'COS'|'IO';
+
+proto sub resolve-class(*@) {
+    my %info = {*};
+    %info<proj url> = %info<repo>.starts-with("HarfBuzz")
+        ?? ('HarfBuzz', HarfBuzzRoot)
+        !! ('PDF', PDFRoot);
+    %info;
+}
 
 multi sub resolve-class(*@path ( 'PDF', 'Tags', 'Reader', *@)) { %( :repo<PDF-Tags-Reader-raku>, :@path ) }
 multi sub resolve-class(*@path ( 'PDF', 'Tags', *@)) { %( :repo<PDF-Tags-raku>, :@path ) }
@@ -17,6 +26,11 @@ multi sub resolve-class('PDF') { %( :repo<PDF-raku> )}
 multi sub resolve-class('PDF', PDFCore, *@) { %( :repo<PDF-raku> )}
 multi sub resolve-class('PDF', *@path) { %( :repo<PDF-Class-raku> )}
 
+multi sub resolve-class(*@path ( 'HarfBuzz', 'Subset', *@)) { %( :repo<HarfBuzz-Subset-raku>, :@path ) }
+multi sub resolve-class(*@ ( 'HarfBuzz', 'Shaper', 'Cairo', *@)) { %( :repo<HarfBuzz-Shaper-Cairo-raku> ) }
+multi sub resolve-class(*@ ( 'HarfBuzz', 'Font', 'FreeType', *@)) { %( :repo<HarfBuzz-Font-FreeType-raku> ) }
+multi sub resolve-class(*@path ( 'HarfBuzz', *@)) { %( :repo<HarfBuzz-raku>, :@path ) }
+
 multi sub resolve-class(*@path ( 'FDF', *@)) { %( :repo<FDF-raku>, :@path ) }
 multi sub resolve-class(*@ ( 'FontConfig', *@)) { %( :repo<FontConfig> ) }
 
@@ -27,7 +41,7 @@ multi sub resolve-class(*@p) {
 
 sub link-to-url(Str() $class-name) {
     my %info = resolve-class(|$class-name.split('::'));
-    my @path = DocRoot;
+    my @path = %info<url>;;
     @path.push: %info<repo>;
     @path.append(.list) with %info<path>;
     @path.join: '/';
@@ -50,9 +64,10 @@ sub breadcrumb(Str $url is copy, @path, UInt $n = +@path, :$top) {
 INIT {
     with %*ENV<TRAIL> {
         # build a simple breadcrumb trail
-        my $url = DocRoot;
-        say "[[Raku PDF Project]]({$url})";
         my %info = resolve-class(|.split('/'));
+        my $url = %info<url>;
+        my $proj = %info<proj>;
+        say "[[Raku $proj Project]]({$url})";
         my $repo = %info<repo>;
         $url ~= '/' ~ $repo;
 
@@ -72,4 +87,4 @@ INIT {
     }
 }
 
-s:g:s/ '](' ([PDF|FDF|Font]['::'*%%<[a..z A..Z 0..9 _ -]>+]) ')'/{'](' ~ link-to-url($0) ~ ')'}/;
+s:g:s/ '](' ([PDF|FDF|Font|HarfBuzz]['::'*%%<[a..z A..Z 0..9 _ -]>+]) ')'/{'](' ~ link-to-url($0) ~ ')'}/;
