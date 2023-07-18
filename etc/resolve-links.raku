@@ -17,9 +17,11 @@ multi sub resolve-class(*@path ( 'PDF', 'Tags', 'Reader', *@)) { %( :repo<PDF-Ta
 multi sub resolve-class(*@path ( 'PDF', 'Tags', *@)) { %( :repo<PDF-Tags-raku>, :@path ) }
 multi sub resolve-class(*@path ( 'PDF', 'Native', *@)) { %( :repo<PDF-Native-raku>, :@path ) }
 multi sub resolve-class(*@path ( 'Font', 'FreeType', *@)) { %( :repo<Font-FreeType-raku>, :@path ) }
+multi sub resolve-class(*@path ( 'FontConfig', *@)) { %( :repo<FontConfig-raku>, :@path ) }
 multi sub resolve-class(*@ ('PDF', 'Font', 'Loader', 'CSS', *@)) { %( :repo<PDF-Font-Loader-CSS-raku> ) }
 multi sub resolve-class(*@path ('PDF', 'Font', 'Loader', *@)) { %( :repo<PDF-Font-Loader-raku>, :@path ) }
 
+multi sub resolve-class('Font', 'AFM') { %( :repo<Font-AFM-raku> ) }
 multi sub resolve-class('PDF', 'API6', *@path) { %( :repo<PDF-API6> ) }
 multi sub resolve-class(*@ ('PDF', PDFModule $mod, *@path)) { %( :repo("PDF-{$mod}-raku") ) }
 multi sub resolve-class('PDF') { %( :repo<PDF-raku> )}
@@ -33,7 +35,6 @@ multi sub resolve-class(*@ ( 'HarfBuzz', 'Font', 'FreeType', *@)) { %( :repo<Har
 multi sub resolve-class(*@path ( 'HarfBuzz', *@)) { %( :repo<HarfBuzz-raku>, :@path ) }
 
 multi sub resolve-class(*@path ( 'FDF', *@)) { %( :repo<FDF-raku>, :@path ) }
-multi sub resolve-class(*@ ( 'FontConfig', *@)) { %( :repo<FontConfig> ) }
 
 multi sub resolve-class(*@p) {
     warn "unknown path: {@p}";
