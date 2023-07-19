@@ -89,4 +89,4 @@ INIT {
     }
 }
 
-s:g:s/ '](' ([PDF|FDF|Font|HarfBuzz]['::'*%%<[a..z A..Z 0..9 _ -]>+]) ')'/{'](' ~ link-to-url($0) ~ ')'}/;
+s:g:s/ '](' ([PDF|FDF|Font[Config]?|HarfBuzz]['::'*%%<[a..z A..Z 0..9 _ -]>+]) ')'/{'](' ~ link-to-url($0) ~ ')'}/;
