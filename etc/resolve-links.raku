@@ -2,7 +2,7 @@ constant PDFRoot = "https://pdf-raku.github.io";
 constant HarfBuzzRoot = "https://harfbuzz-raku.github.io";
 
 # Map to the best documentation source
-my subset PDFModule of Str where 'Content'|'Grammar'|'Lite';
+my subset PDFModule of Str where 'Grammar'|'Lite';
 my subset PDFCore of Str where 'COS'|'IO';
 
 proto sub resolve-class(*@) {
@@ -13,6 +13,7 @@ proto sub resolve-class(*@) {
     %info;
 }
 
+multi sub resolve-class(*@path ( 'PDF', 'Content', *@)) { %( :repo<PDF-Content-raku>, :@path ) }
 multi sub resolve-class(*@path ( 'PDF', 'Tags', 'Reader', *@)) { %( :repo<PDF-Tags-Reader-raku>, :@path ) }
 multi sub resolve-class(*@path ( 'PDF', 'Tags', *@)) { %( :repo<PDF-Tags-raku>, :@path ) }
 multi sub resolve-class(*@path ( 'PDF', 'Native', *@)) { %( :repo<PDF-Native-raku>, :@path ) }
