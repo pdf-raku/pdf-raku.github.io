@@ -14,59 +14,60 @@
 <!ENTITY % StructMisc "NonStruct|Private">
 <!ENTITY % SubPart "Art|Div|Sect">
 <!ENTITY % attsAny "
-	Placement (Block|Inline|Before|Start|End) #IMPLIED
-	WritingMode (LrTb|RlTb|TbRl) 'LrTb'
 	BackgroundColor CDATA #IMPLIED
 	BorderColor CDATA #IMPLIED
 	BorderStyle CDATA #IMPLIED
 	BorderThickness CDATA #IMPLIED
-	Padding CDATA #IMPLIED
 	Color CDATA #IMPLIED
+	Lang CDATA #IMPLIED
+	Padding CDATA #IMPLIED
+	Placement (Block|Inline|Before|Start|End) #IMPLIED
+	WritingMode (LrTb|RlTb|TbRl) 'LrTb'
 	role CDATA #IMPLIED">
 <!ENTITY % attsBLSE "
-	SpaceBefore CDATA #IMPLIED
-	SpaceAfter CDATA #IMPLIED
-	StartIndent CDATA #IMPLIED
-	EndIndent CDATA #IMPLIED
-	TextIndent CDATA #IMPLIED
-	TextAlign (Start|Center|End|Justify) 'Start'
 	BBox CDATA #IMPLIED
-	Width CDATA #IMPLIED
-	Height CDATA #IMPLIED
 	BlockAlign (Before|Middle|After|Justify) 'Before'
+	EndIndent CDATA #IMPLIED
+	Height CDATA #IMPLIED
 	InlineAlign (Start|Center|End) 'Start'
+	SpaceAfter CDATA #IMPLIED
+	SpaceBefore CDATA #IMPLIED
+	StartIndent CDATA #IMPLIED
 	TBorderStyle CDATA #IMPLIED
 	TPadding CDATA #IMPLIED
+	TextAlign (Start|Center|End|Justify) 'Start'
+	TextIndent CDATA #IMPLIED
+	Width CDATA #IMPLIED
 	class CDATA #IMPLIED">
 <!ENTITY % attsCell "
-	RowSpan CDATA #IMPLIED
+	BlockAlign (Before|Middle|After|Justify) 'Before'
 	ColSpan CDATA #IMPLIED
 	Headers CDATA #IMPLIED
-	Scope (Row|Column|Both) #IMPLIED
-	Width CDATA #IMPLIED
 	Height CDATA #IMPLIED
-	BlockAlign (Before|Middle|After|Justify) 'Before'
 	InlineAlign (Start|Center|End) 'Start'
+	RowSpan CDATA #IMPLIED
+	Scope (Row|Column|Both) #IMPLIED
 	TBorderStyle CDATA #IMPLIED
-	TPadding CDATA #IMPLIED">
+	TPadding CDATA #IMPLIED
+	Width CDATA #IMPLIED">
 <!ENTITY % attsCols "
 	ColumnCount CDATA #IMPLIED
 	ColumnGap CDATA #IMPLIED
 	ColumnWidths CDATA #IMPLIED">
 <!ENTITY % attsILSE "
 	BaselineShift CDATA #IMPLIED
+	GlyphOrientationVertical CDATA #IMPLIED
 	LineHeight CDATA #IMPLIED
-	TextDecorationColor CDATA #IMPLIED
-	TextDecorationThickness CDATA #IMPLIED
-	TextDecorationType (None|Underline|Overline|LineThrough) 'None'
 	RubyName (Start|Center|End|Justify|Distribute) 'Distribute'
 	RubyPosition (Before|After|Warichu|Inline) 'Before'
-	GlyphOrientationVertical CDATA #IMPLIED">
+	TextDecorationColor CDATA #IMPLIED
+	TextDecorationThickness CDATA #IMPLIED
+	TextDecorationType (None|Underline|Overline|LineThrough) 'None'">
 <!ENTITY % attsIllustration "
 	BBox CDATA #IMPLIED
-	Width CDATA #IMPLIED
+	BaselineShift CDATA #IMPLIED
 	Height CDATA #IMPLIED
-	BaselineShift CDATA #IMPLIED">
+	Width CDATA #IMPLIED">
 <!ENTITY % attsList "
 	ListNumbering (None|Disc|Circle|Square|Decimal|UpperRoman|LowerRoman|UpperAlpha|LowerAlpha) 'None'">
 <!ENTITY % attsRuby "
