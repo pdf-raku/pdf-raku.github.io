@@ -1,8 +1,8 @@
 module DtD {
     # resources take from the ISO-32000 PDF specification
-    constant BLSE    = set <P H H1 H2 H3 H4 H5 H6 L LI Lbl LBody Table>;
-    constant ILSE    = set <Span Quote Note Reference BibEntry Code Link Annot Ruby Warichu #PCDATA>;
-    constant GROUP   = set <Document Part Art Sect Div BlockQuote Caption TOC TOCI Index NonStruct Private>;
+    constant BLSE    = set <P H H1 H2 H3 H4 H5 H6 L LI Lbl LBody Table Title FENote Sub>;
+    constant ILSE    = set <Span Quote Note Reference BibEntry Code Link Annot Ruby Warichu Em Strong Form #PCDATA>;
+    constant GROUP   = set <Document DocumentFragment Part Art Aside Sect Div BlockQuote Caption TOC TOCI Index NonStruct Private>;
     constant WARICHU = set <WT WP>;
     constant RUBY    = set <RB RT RP>;
     our sub load-elems(%ents) {
