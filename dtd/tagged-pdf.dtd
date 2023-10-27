@@ -8,7 +8,7 @@
 -->
 
 <!ENTITY % Block "BlockQuote|Caption|Figure|Form|Formula|Index|L|P|TOC|Table">
-<!ENTITY % DocFrag "Art|Div|Document|Part|Sect">
+<!ENTITY % DocPart "Art|Div|Document|Part|Sect">
 <!ENTITY % Hdr "H|H1|H2|H3|H4|H5|H6">
 <!ENTITY % Inline "#PCDATA|Annot|BibEntry|Code|Em|FENote|Form|Formula|H|H1|H2|H3|H4|H5|H6|L|LBody|LI|Lbl|Link|Note|P|Quote|Reference|Ruby|Span|Strong|Sub|Table|Title|Warichu">
 <!ENTITY % StructMisc "NonStruct|Private">
@@ -99,16 +99,15 @@
 <!ELEMENT Document (%Block;|%Hdr;|%SubPart;|FENote|LBody|LI|Lbl|Part|Sub|Title)*>
 <!ATTLIST Document %attsAny;>
 
-<!ELEMENT DocumentFragment (%Hdr;|FENote|L|LBody|LI|Lbl|P|Sub|Table|Title)*>
-<!ATTLIST DocumentFragment %attsAny;>
+<!ELEMENT DocumentFragment ANY>
 
 <!ELEMENT FENote (%Inline;)*>
 <!ATTLIST FENote %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Figure (EMPTY)*>
+<!ELEMENT Figure EMPTY>
 <!ATTLIST Figure %attsAny; %attsIllustration;>
 
-<!ELEMENT Form (EMPTY)*>
+<!ELEMENT Form EMPTY>
 <!ATTLIST Form %attsAny; %attsBLSE; %attsILSE; %attsIllustration;>
 
 <!ELEMENT Formula (%Inline;)*>
@@ -153,7 +152,7 @@
 <!ELEMENT Link (%Inline;)*>
 <!ATTLIST Link %attsAny; %attsBLSE; %attsILSE; href CDATA #IMPLIED>
 
-<!ELEMENT NonStruct (%DocFrag;|%Hdr;|%StructMisc;|Aside|BlockQuote|Caption|DocumentFragment|FENote|Index|L|LBody|LI|Lbl|P|Sub|TOC|TOCI|Table|Title)*>
+<!ELEMENT NonStruct (%DocPart;|%Hdr;|%StructMisc;|Aside|BlockQuote|Caption|FENote|Index|L|LBody|LI|Lbl|P|Sub|TOC|TOCI|Table|Title)*>
 <!ATTLIST NonStruct %attsAny;>
 
 <!ELEMENT Note (%Inline;)*>
@@ -165,7 +164,7 @@
 <!ELEMENT Part (%Block;|%Hdr;|%SubPart;|FENote|LBody|LI|Lbl|Sub|Title)*>
 <!ATTLIST Part %attsAny;>
 
-<!ELEMENT Private (%DocFrag;|%Hdr;|%StructMisc;|Aside|BlockQuote|Caption|DocumentFragment|FENote|Index|L|LBody|LI|Lbl|P|Sub|TOC|TOCI|Table|Title)*>
+<!ELEMENT Private (%DocPart;|%Hdr;|%StructMisc;|Aside|BlockQuote|Caption|FENote|Index|L|LBody|LI|Lbl|P|Sub|TOC|TOCI|Table|Title)*>
 <!ATTLIST Private %attsAny;>
 
 <!ELEMENT Quote (%Inline;)*>

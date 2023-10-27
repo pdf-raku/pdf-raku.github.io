@@ -2,9 +2,10 @@ module DtD {
     # resources take from the ISO-32000 PDF specification
     constant BLSE    = set <P H H1 H2 H3 H4 H5 H6 L LI Lbl LBody Table Title FENote Sub>;
     constant ILSE    = set <Span Quote Note Reference BibEntry Code Link Annot Ruby Warichu Em Strong Form #PCDATA>;
-    constant GROUP   = set <Document DocumentFragment Part Art Aside Sect Div BlockQuote Caption TOC TOCI Index NonStruct Private>;
+    constant GROUP   = set <Document Part Art Aside Sect Div BlockQuote Caption TOC TOCI Index NonStruct Private>;
     constant WARICHU = set <WT WP>;
     constant RUBY    = set <RB RT RP>;
+    constant FRAG    = set <DocumentFragment>;
     our sub load-elems(%ents) {
         my %elems;
         # resources taken from https://accessible-pdf.info/basics/general/overview-of-the-pdf-tags
@@ -38,6 +39,7 @@ module DtD {
         # Populate some elements no specifically covered in the CSV files
         %elems<Warichu>{$_}++ for WARICHU.keys;
         %elems<Ruby>{$_}++ for RUBY.keys;
+        %elems{$_}<ANY>++ for FRAG.keys;
         %elems{$_}{'Span'|'#PCDATA'}++ for WARICHU.keys.Slip, RUBY.keys.Slip;
         for GROUP.keys -> $grp {
             for BLSE.keys -> $blk {
@@ -129,9 +131,14 @@ module DtD {
 
         for %elems.keys.sort -> $k {
             my @v = %elems{$k}.keys.sort;
-            say "<!ELEMENT $k ({@v.join: '|'})*>";
-            with %atts{$k}.sort.unique {
-                say "<!ATTLIST $k {.join: ' '}>";
+            my $rhs = @v == 1 && @v.head ~~ 'EMPTY'|'ANY'
+                ?? @v.head
+                !! "({@v.join: '|'})*";
+            say "<!ELEMENT $k $rhs>";
+            unless $k eq 'DocumentFragment' {
+                with %atts{$k}.sort.unique {
+                    say "<!ATTLIST $k {.join: ' '}>";
+                }
             }
             say '';
         }
@@ -146,7 +153,7 @@ our %ents = :Hdr<H H1 H2 H3 H4 H5 H6>,
                 DtD::BLSE.keys.Slip),
             :Block<BlockQuote Caption Figure Form Formula Index L P TOC Table>,
             :StructMisc<NonStruct Private>,
-            :DocFrag<Document Part Art Sect Div>,
+            :DocPart<Document Part Art Sect Div>,
             ;
 
 my %elems = DtD::load-elems(%ents);
