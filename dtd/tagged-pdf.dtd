@@ -158,7 +158,7 @@
 <!ELEMENT Note (%Inline;)*>
 <!ATTLIST Note %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT P (%Inline;|Figure|Form)*>
+<!ELEMENT P (%Inline;|Figure)*>
 <!ATTLIST P %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT Part (%Block;|%Hdr;|%SubPart;|FENote|LBody|LI|Lbl|Sub|Title)*>
@@ -197,7 +197,7 @@
 <!ELEMENT TBody (TR)*>
 <!ATTLIST TBody %attsAny;>
 
-<!ELEMENT TD (%Inline;|Figure|Form)*>
+<!ELEMENT TD (%Inline;|Figure)*>
 <!ATTLIST TD %attsAny; %attsCell;>
 
 <!ELEMENT TFoot (TR)*>
