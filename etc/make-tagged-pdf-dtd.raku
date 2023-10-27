@@ -42,6 +42,9 @@ module DtD {
         %elems{$_}<ANY>++ for FRAG.keys;
         %elems{$_}{'Span'|'#PCDATA'}++ for WARICHU.keys.Slip, RUBY.keys.Slip;
         for GROUP.keys -> $grp {
+            for GROUP.keys -> $grp2 {
+                %elems{$grp}{$grp2}++;
+            }
             for BLSE.keys -> $blk {
                 %elems{$grp}{$blk}++;
             }
@@ -154,7 +157,7 @@ our %ents = :Hdr<H H1 H2 H3 H4 H5 H6>,
             :Block<BlockQuote Caption Figure Form Formula Index L P TOC Table>,
             :StructMisc<NonStruct Private>,
             :DocPart<Document Part Art Sect Div>,
-            ;
+;
 
 my %elems = DtD::load-elems(%ents);
 DtD::remove-dups(%elems, %ents);

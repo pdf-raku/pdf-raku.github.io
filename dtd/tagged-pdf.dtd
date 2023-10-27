@@ -78,25 +78,25 @@
 <!ELEMENT Annot (%Inline;)*>
 <!ATTLIST Annot %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Art (%Block;|%Hdr;|Div|FENote|LBody|LI|Lbl|Sect|Sub|Title)*>
+<!ELEMENT Art (%Block;|%DocPart;|%Hdr;|%StructMisc;|Aside|FENote|LBody|LI|Lbl|Sub|TOCI|Title)*>
 <!ATTLIST Art %attsAny; %attsCols;>
 
-<!ELEMENT Aside (%Hdr;|FENote|L|LBody|LI|Lbl|P|Sub|Table|Title)*>
+<!ELEMENT Aside (%DocPart;|%Hdr;|%StructMisc;|Aside|BlockQuote|Caption|FENote|Index|L|LBody|LI|Lbl|P|Sub|TOC|TOCI|Table|Title)*>
 <!ATTLIST Aside %attsAny;>
 
-<!ELEMENT BlockQuote (%Hdr;|%SubPart;|Caption|FENote|Figure|Formula|L|LBody|LI|Lbl|P|Sub|Table|Title)*>
+<!ELEMENT BlockQuote (%DocPart;|%Hdr;|%StructMisc;|Aside|BlockQuote|Caption|FENote|Figure|Formula|Index|L|LBody|LI|Lbl|P|Sub|TOC|TOCI|Table|Title)*>
 <!ATTLIST BlockQuote %attsAny;>
 
-<!ELEMENT Caption (%Inline;)*>
+<!ELEMENT Caption (%DocPart;|%Inline;|%StructMisc;|Aside|BlockQuote|Caption|Index|TOC|TOCI)*>
 <!ATTLIST Caption %attsAny;>
 
 <!ELEMENT Code (%Inline;)*>
 <!ATTLIST Code %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Div (%Block;|%Hdr;|%SubPart;|FENote|LBody|LI|Lbl|Sub|Title)*>
+<!ELEMENT Div (%Block;|%DocPart;|%Hdr;|%StructMisc;|Aside|FENote|LBody|LI|Lbl|Sub|TOCI|Title)*>
 <!ATTLIST Div %attsAny; %attsCols;>
 
-<!ELEMENT Document (%Block;|%Hdr;|%SubPart;|FENote|LBody|LI|Lbl|Part|Sub|Title)*>
+<!ELEMENT Document (%Block;|%DocPart;|%Hdr;|%StructMisc;|Aside|FENote|LBody|LI|Lbl|Sub|TOCI|Title)*>
 <!ATTLIST Document %attsAny;>
 
 <!ELEMENT DocumentFragment ANY>
@@ -134,7 +134,7 @@
 <!ELEMENT H6 (%Inline;)*>
 <!ATTLIST H6 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Index (%Hdr;|FENote|L|LBody|LI|Lbl|P|Sub|Table|Title)*>
+<!ELEMENT Index (%DocPart;|%Hdr;|%StructMisc;|Aside|BlockQuote|Caption|FENote|Index|L|LBody|LI|Lbl|P|Sub|TOC|TOCI|Table|Title)*>
 <!ATTLIST Index %attsAny;>
 
 <!ELEMENT L (%Inline;|Caption)*>
@@ -161,7 +161,7 @@
 <!ELEMENT P (%Inline;|Figure)*>
 <!ATTLIST P %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Part (%Block;|%Hdr;|%SubPart;|FENote|LBody|LI|Lbl|Sub|Title)*>
+<!ELEMENT Part (%Block;|%DocPart;|%Hdr;|%StructMisc;|Aside|FENote|LBody|LI|Lbl|Sub|TOCI|Title)*>
 <!ATTLIST Part %attsAny;>
 
 <!ELEMENT Private (%DocPart;|%Hdr;|%StructMisc;|Aside|BlockQuote|Caption|FENote|Index|L|LBody|LI|Lbl|P|Sub|TOC|TOCI|Table|Title)*>
@@ -185,7 +185,7 @@
 <!ELEMENT Ruby (RB|RP|RT)*>
 <!ATTLIST Ruby %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Sect (%Block;|%Hdr;|%SubPart;|FENote|LBody|LI|Lbl|Sub|Title)*>
+<!ELEMENT Sect (%Block;|%DocPart;|%Hdr;|%StructMisc;|Aside|FENote|LBody|LI|Lbl|Sub|TOCI|Title)*>
 <!ATTLIST Sect %attsAny; %attsCols;>
 
 <!ELEMENT Span (%Inline;)*>
@@ -209,10 +209,10 @@
 <!ELEMENT THead (TR)*>
 <!ATTLIST THead %attsAny;>
 
-<!ELEMENT TOC (%Hdr;|FENote|L|LBody|LI|Lbl|P|Sub|TOCI|Table|Title)*>
+<!ELEMENT TOC (%DocPart;|%Hdr;|%StructMisc;|Aside|BlockQuote|Caption|FENote|Index|L|LBody|LI|Lbl|P|Sub|TOC|TOCI|Table|Title)*>
 <!ATTLIST TOC %attsAny;>
 
-<!ELEMENT TOCI (%Hdr;|FENote|L|LBody|LI|Lbl|P|Reference|Sub|TOC|Table|Title)*>
+<!ELEMENT TOCI (%DocPart;|%Hdr;|%StructMisc;|Aside|BlockQuote|Caption|FENote|Index|L|LBody|LI|Lbl|P|Reference|Sub|TOC|TOCI|Table|Title)*>
 <!ATTLIST TOCI %attsAny;>
 
 <!ELEMENT TR (TD|TH)*>
