@@ -246,7 +246,7 @@ my %atts;
 %atts<L>.push: '%attsList;', for <L>;
 %atts{$_}.push: '%attsCell;' for <TH TD>;
 %atts{$_}.push: '%attsRuby;' for DtD::RUBY.keys;
-%atts{$_}.push: '%attsIllustration;' for <Figure Formula Form>;
+%atts{$_}.push: '%attsIllustration;' for <Figure Formula>;
 %atts<Link>.push: 'href CDATA #IMPLIED';
 %atts<Table>.push: '%attsTable;' for <Table TR TH TD THead TBody TFoot>;
 

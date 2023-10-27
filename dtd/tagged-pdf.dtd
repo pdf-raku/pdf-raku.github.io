@@ -108,7 +108,7 @@
 <!ATTLIST Figure %attsAny; %attsIllustration;>
 
 <!ELEMENT Form EMPTY>
-<!ATTLIST Form %attsAny; %attsBLSE; %attsILSE; %attsIllustration;>
+<!ATTLIST Form %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT Formula (%Inline;)*>
 <!ATTLIST Formula %attsAny; %attsIllustration;>
