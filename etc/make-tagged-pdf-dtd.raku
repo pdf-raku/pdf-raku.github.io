@@ -156,7 +156,7 @@ our %ents = :Hdr<H H1 H2 H3 H4 H5 H6>,
                 DtD::BLSE.keys.Slip),
             :Block<BlockQuote Caption Figure Form Formula Index L P TOC Table>,
             :StructMisc<NonStruct Private>,
-            :DocPart<Document Part Art Sect Div>,
+            :Part<Document Part Art Sect Div>,
 ;
 
 my %elems = DtD::load-elems(%ents);
