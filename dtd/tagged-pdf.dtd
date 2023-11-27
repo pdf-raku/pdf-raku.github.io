@@ -102,7 +102,7 @@
 <!ELEMENT Document (%Block;|%Hdr;|%Part;|%StructMisc;|Annot|Artifact|Aside|DocumentFragment|FENote|LBody|LI|Lbl|Link|Sub|TOCI|Title)*>
 <!ATTLIST Document %attsAny;>
 
-<!ELEMENT DocumentFragment (%Hdr;|ANY|Annot|Artifact|Aside|Div|Document|DocumentFragment|FENote|Figure|Form|Formula|L|Link|NonStruct|P|Part|Sect|Table|Title)*>
+<!ELEMENT DocumentFragment (%Hdr;|Annot|Artifact|Aside|Div|Document|DocumentFragment|FENote|Figure|Form|Formula|L|Link|NonStruct|P|Part|Sect|Table|Title)*>
 
 <!ELEMENT Em (%Inline;|Artifact|Em|Figure|Form|NonStruct|Ruby|Strong|Warichu)*>
 <!ATTLIST Em %attsAny; %attsBLSE; %attsILSE;>
@@ -110,10 +110,10 @@
 <!ELEMENT FENote (%Inline;|Artifact|Aside|Caption|Div|DocumentFragment|Em|Figure|Form|NonStruct|Part|Ruby|Sect|Strong|Warichu)*>
 <!ATTLIST FENote %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Figure (%Inline;|Artifact|Aside|Caption|Div|EMPTY|Em|Figure|Form|NonStruct|Part|Ruby|Sect|Strong|Warichu)*>
+<!ELEMENT Figure (%Inline;|Artifact|Aside|Caption|Div|Em|Figure|Form|NonStruct|Part|Ruby|Sect|Strong|Warichu)*>
 <!ATTLIST Figure %attsAny; %attsIllustration;>
 
-<!ELEMENT Form (%Inline;|Artifact|Caption|Div|EMPTY|Figure|NonStruct|Part)*>
+<!ELEMENT Form (%Inline;|Artifact|Caption|Div|Figure|NonStruct|Part)*>
 <!ATTLIST Form %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT Formula (%Inline;|Artifact|Aside|Caption|Div|Em|Figure|Form|NonStruct|Part|Ruby|Strong|Warichu)*>
