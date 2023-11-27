@@ -176,13 +176,13 @@
 <!ELEMENT Quote (%Inline;)*>
 <!ATTLIST Quote %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT RB (#PCDATA|%Inline;|Artifact|Em|Form|NonStruct|Strong)*>
+<!ELEMENT RB (%Inline;|Artifact|Em|Form|NonStruct|Strong)*>
 <!ATTLIST RB %attsAny; %attsRuby;>
 
-<!ELEMENT RP (#PCDATA|%Inline;|Artifact|Em|Form|NonStruct|Strong)*>
+<!ELEMENT RP (%Inline;|Artifact|Em|Form|NonStruct|Strong)*>
 <!ATTLIST RP %attsAny; %attsRuby;>
 
-<!ELEMENT RT (#PCDATA|%Inline;|Artifact|Em|Form|NonStruct|Strong)*>
+<!ELEMENT RT (%Inline;|Artifact|Em|Form|NonStruct|Strong)*>
 <!ATTLIST RT %attsAny; %attsRuby;>
 
 <!ELEMENT Reference (%Inline;)*>
@@ -236,10 +236,10 @@
 <!ELEMENT Title (%Inline;|Artifact|Aside|Caption|Div|Em|Figure|Form|NonStruct|Part|Ruby|Strong|Warichu)*>
 <!ATTLIST Title %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT WP (#PCDATA|%Inline;|Artifact|Em|Figure|Form|NonStruct|Strong)*>
+<!ELEMENT WP (%Inline;|Artifact|Em|Figure|Form|NonStruct|Strong)*>
 <!ATTLIST WP %attsAny;>
 
-<!ELEMENT WT (#PCDATA|%Inline;|Artifact|Em|Form|NonStruct|Strong)*>
+<!ELEMENT WT (%Inline;|Artifact|Em|Form|NonStruct|Strong)*>
 <!ATTLIST WT %attsAny;>
 
 <!ELEMENT Warichu (%Inline;|NonStruct|WP|WT)*>

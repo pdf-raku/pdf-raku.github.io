@@ -40,7 +40,7 @@ module DtD {
         %elems<Warichu>{$_}++ for WARICHU.keys;
         %elems<Ruby>{$_}++ for RUBY.keys;
         %elems{$_}<ANY>++ for FRAG.keys;
-        %elems{$_}{'Span'|'#PCDATA'}++ for WARICHU.keys.Slip, RUBY.keys.Slip;
+        %elems{$_}{'Span'|'%Inline;'}++ for WARICHU.keys.Slip, RUBY.keys.Slip;
         for GROUP.keys -> $grp {
             for GROUP.keys -> $grp2 {
                 %elems{$grp}{$grp2}++;
@@ -56,7 +56,6 @@ module DtD {
         %elems{$_}<%Inline;>++ for <H Lbl TH TD Caption>;
 
         for %elems.values {
-##            .<#PCDATA>++ if (.<Span>:exists) || (.<%Inline;>:exists);
             $_ ||= %( :EMPTY );
         }
         %elems;
