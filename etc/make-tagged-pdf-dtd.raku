@@ -62,6 +62,22 @@ module DtD {
         %elems;
     }
 
+    multi sub Hn('Hn') { ('H1'..'H6').Slip; }
+    multi sub Hn($_) { $_  }
+
+    our sub load-elems2(%elems) {
+        # resources taken from the ISO-32000-2 PDF 2.0  Spec
+        use JSON::Fast;
+        my %table = from-json 'etc/Table_Annex_L2-Parent-child_relationships_between_the_standard_structure_elements_in_the_standard_structure_namespace_for_PDF_20.json'.IO.slurp;
+
+        for %table<table><rows>.List {
+            for Hn(.[0]) -> $p {
+                my @kids = .[2].subst('content item', '#PCDATA').split(' ').map: &Hn;
+                %elems{$p}{$_}++ for @kids;
+            }
+        }
+    }
+
     our sub reconcile(%elems, %ents) {
         my %refs;
         %refs{$_}++ for %elems.values.map: {.keys.Slip};
@@ -160,6 +176,7 @@ our %ents = :Hdr<H H1 H2 H3 H4 H5 H6>,
 ;
 
 my %elems = DtD::load-elems(%ents);
+DtD::load-elems2(%elems);
 DtD::remove-dups(%elems, %ents);
 DtD::reconcile(%elems, %ents);
 %ents<attsAny> = (
