@@ -13,9 +13,7 @@ module DtD {
             my $d = .slurp;
             for $d.lines.skip {
                 my ($elems, $desc, $parents, $kids) = .split: "\t";
-                my @parents = $parents
-                    .subst('H1–H6', {('H', slip 'H1'..'H6').join: ', '})
-                    .split(", ");
+                my @parents = $parents.split(", ").map(&Hn);
                 my @kids = $kids.split(", ")
                             if $kids.defined && $kids ~~ /^[<alnum>+] * % ', '$/;
                 for $elems.split(", ") -> $e {
@@ -32,15 +30,11 @@ module DtD {
         }
         # vivify inline elements
         for %ents<Inline>.Slip {
-         ##   %elems{$_}<#PCDATA>++;
             %elems{$_}<%Inline;>++;
         }
 
         # Populate some elements no specifically covered in the CSV files
-        %elems<Warichu>{$_}++ for WARICHU.keys;
-        %elems<Ruby>{$_}++ for RUBY.keys;
-        %elems{$_}<ANY>++ for FRAG.keys;
-        %elems{$_}{'Span'|'%Inline;'}++ for WARICHU.keys.Slip, RUBY.keys.Slip;
+
         for GROUP.keys -> $grp {
             for GROUP.keys -> $grp2 {
                 %elems{$grp}{$grp2}++;
@@ -49,18 +43,13 @@ module DtD {
                 %elems{$grp}{$blk}++;
             }
         }
-        for GROUP.keys.Slip, BLSE.keys.Slip {
-            %elems<NonStruct>{$_}++;
-            %elems<Private>{$_}++;
-        }
+
         %elems{$_}<%Inline;>++ for <H Lbl TH TD Caption>;
 
-        for %elems.values {
-            $_ ||= %( :EMPTY );
-        }
         %elems;
     }
 
+    multi sub Hn('H1–H6') { ('H1'..'H6').Slip; }
     multi sub Hn('Hn') { ('H1'..'H6').Slip; }
     multi sub Hn($_) { $_  }
 
