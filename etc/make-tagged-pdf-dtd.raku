@@ -72,7 +72,7 @@ module DtD {
 
         for %table<table><rows>.List {
             for Hn(.[0]) -> $p {
-                my @kids = .[2].subst('content item', '#PCDATA').split(' ').map: &Hn;
+                my @kids = .[2].subst('content item', '%Inline;').split(' ').map: &Hn;
                 %elems{$p}{$_}++ for @kids;
             }
         }
