@@ -121,9 +121,11 @@ module DtD {
     our sub output(%elems, %ents, %atts) {
         say q:to<END>;
         <!-- Non normative XML DtD for tagged PDF XML serialization. Based on:
-              - PDF ISO-32000 1.7 Specification,
-                - Section 14.8.4 Standard Structure Types
-                - Section 14.8.5 Standard Structure Attributes
+              - PDF ISO-32000-1 1.7 Specification,
+                - Section 14.8.4 : Standard Structure Types
+                - Section 14.8.5 : Standard Structure Attributes
+              - PDF ISO-32000-2 2.0 Specification,
+                - Annex L2 : Parent-child relationships between the standard structure elements in the standard structure namespace for PDF 2.0
               - https://accessible-pdf.info/basics/general/overview-of-the-pdf-tags
 
              Not applying ordering or arity constraints on child nodes
