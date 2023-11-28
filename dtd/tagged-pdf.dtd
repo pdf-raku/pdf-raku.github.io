@@ -11,7 +11,7 @@
 
 <!ENTITY % Block "BlockQuote|Caption|Figure|Form|Formula|Index|L|P|TOC|Table">
 <!ENTITY % Hdr "H|H1|H2|H3|H4|H5|H6">
-<!ENTITY % Inline "#PCDATA|Annot|BibEntry|Code|Em|FENote|Form|Formula|H|H1|H2|H3|H4|H5|H6|L|LBody|LI|Lbl|Link|Note|P|Quote|Reference|Ruby|Span|Strong|Sub|Table|Title|Warichu">
+<!ENTITY % Inline "#PCDATA|Annot|Artifact|BibEntry|Caption|Code|Em|FENote|Figure|Form|Formula|H|H1|H2|H3|H4|H5|H6|L|LBody|LI|Lbl|Link|Note|P|Quote|Reference|Ruby|Span|Strong|Sub|Table|Title|Warichu">
 <!ENTITY % Part "Art|Div|Document|Part|Sect">
 <!ENTITY % StructMisc "Aside|NonStruct|Private|TOCI">
 <!ENTITY % SubPart "Art|Div|Sect">
@@ -65,11 +65,6 @@
 	TextDecorationColor CDATA #IMPLIED
 	TextDecorationThickness CDATA #IMPLIED
 	TextDecorationType (None|Underline|Overline|LineThrough) 'None'">
-<!ENTITY % attsIllustration "
-	BBox CDATA #IMPLIED
-	BaselineShift CDATA #IMPLIED
-	Height CDATA #IMPLIED
-	Width CDATA #IMPLIED">
 <!ENTITY % attsList "
 	ListNumbering (None|Disc|Circle|Square|Decimal|UpperRoman|LowerRoman|UpperAlpha|LowerAlpha) 'None'">
 <!ENTITY % attsRuby "
@@ -77,26 +72,26 @@
 <!ENTITY % attsTable "
 	Summary CDATA #IMPLIED">
 
-<!ELEMENT Annot (%Inline;|Artifact|Aside|Caption|Div|DocumentFragment|Figure|NonStruct|Part|Sect)*>
+<!ELEMENT Annot (%Inline;|Aside|Div|DocumentFragment|NonStruct|Part|Sect)*>
 <!ATTLIST Annot %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Art (%Block;|%Hdr;|%Part;|%StructMisc;|FENote|LBody|LI|Lbl|Sub|Title)*>
+<!ELEMENT Art (%Block;|%Hdr;|%Part;|%StructMisc;|Artifact|FENote|LBody|LI|Sub|Title)*>
 <!ATTLIST Art %attsAny; %attsCols;>
 
-<!ELEMENT Artifact (%Inline;|Artifact|Aside|Caption|Div|Document|DocumentFragment|Figure|NonStruct|Part|RB|RP|RT|Sect|TBody|TD|TFoot|TH|THead|TR|WP|WT)*>
-<!ATTLIST Artifact %attsAny;>
+<!ELEMENT Artifact (%Inline;|%Part;|%StructMisc;|BlockQuote|DocumentFragment|Index|RB|RP|RT|TBody|TD|TFoot|TH|THead|TOC|TR|WP|WT)*>
+<!ATTLIST Artifact %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Aside (%Inline;|%Part;|%StructMisc;|Artifact|BlockQuote|Caption|DocumentFragment|Figure|Index|TOC)*>
+<!ELEMENT Aside (%Inline;|%Part;|%StructMisc;|BlockQuote|DocumentFragment|Index|TOC)*>
 <!ATTLIST Aside %attsAny;>
 
 <!ELEMENT BibEntry (%Inline;)*>
 <!ATTLIST BibEntry %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT BlockQuote (%Hdr;|%Part;|%StructMisc;|BlockQuote|Caption|FENote|Figure|Formula|Index|L|LBody|LI|Lbl|P|Sub|TOC|Table|Title)*>
+<!ELEMENT BlockQuote (%Hdr;|%Part;|%StructMisc;|Artifact|BlockQuote|Caption|FENote|Figure|Formula|Index|L|LBody|LI|P|Sub|TOC|Table|Title)*>
 <!ATTLIST BlockQuote %attsAny;>
 
-<!ELEMENT Caption (%Inline;|%Part;|%StructMisc;|Artifact|BlockQuote|Caption|DocumentFragment|Figure|Index|TOC)*>
-<!ATTLIST Caption %attsAny;>
+<!ELEMENT Caption (%Inline;|%Part;|%StructMisc;|BlockQuote|DocumentFragment|Index|TOC)*>
+<!ATTLIST Caption %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT Code (%Inline;)*>
 <!ATTLIST Code %attsAny; %attsBLSE; %attsILSE;>
@@ -104,90 +99,90 @@
 <!ELEMENT Div (%Block;|%Hdr;|%Part;|%StructMisc;|Annot|Artifact|DocumentFragment|Em|FENote|LBody|LI|Lbl|Link|RB|RP|RT|Ruby|Span|Strong|Sub|TBody|TD|TFoot|TH|THead|TR|Title|WP|WT|Warichu)*>
 <!ATTLIST Div %attsAny; %attsCols;>
 
-<!ELEMENT Document (%Block;|%Hdr;|%Part;|%StructMisc;|Annot|Artifact|DocumentFragment|FENote|LBody|LI|Lbl|Link|Sub|Title)*>
+<!ELEMENT Document (%Block;|%Hdr;|%Part;|%StructMisc;|Annot|Artifact|DocumentFragment|FENote|LBody|LI|Link|Sub|Title)*>
 <!ATTLIST Document %attsAny;>
 
 <!ELEMENT DocumentFragment (%Hdr;|Annot|Artifact|Aside|Div|Document|DocumentFragment|FENote|Figure|Form|Formula|L|Link|NonStruct|P|Part|Sect|Table|Title)*>
 
-<!ELEMENT Em (%Inline;|Artifact|Figure|NonStruct)*>
+<!ELEMENT Em (%Inline;|NonStruct)*>
 <!ATTLIST Em %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT FENote (%Inline;|Artifact|Aside|Caption|Div|DocumentFragment|Figure|NonStruct|Part|Sect)*>
+<!ELEMENT FENote (%Inline;|Aside|Div|DocumentFragment|NonStruct|Part|Sect)*>
 <!ATTLIST FENote %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Figure (%Inline;|Artifact|Aside|Caption|Div|Figure|NonStruct|Part|Sect)*>
-<!ATTLIST Figure %attsAny; %attsIllustration;>
+<!ELEMENT Figure (%Inline;|%Part;|%StructMisc;|BlockQuote|Index|TOC)*>
+<!ATTLIST Figure %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Form (%Inline;|Artifact|Caption|Div|Figure|NonStruct|Part)*>
+<!ELEMENT Form (%Inline;|Div|NonStruct|Part)*>
 <!ATTLIST Form %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Formula (%Inline;|Artifact|Aside|Caption|Div|Figure|NonStruct|Part)*>
-<!ATTLIST Formula %attsAny; %attsIllustration;>
+<!ELEMENT Formula (%Inline;|%Part;|%StructMisc;|BlockQuote|Index|TOC)*>
+<!ATTLIST Formula %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H (%Inline;|Artifact|Figure|NonStruct|Sect)*>
+<!ELEMENT H (%Inline;|NonStruct|Sect)*>
 <!ATTLIST H %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H1 (%Inline;|Artifact|Figure|NonStruct|Sect)*>
+<!ELEMENT H1 (%Inline;|NonStruct|Sect)*>
 <!ATTLIST H1 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H2 (%Inline;|Artifact|Figure|NonStruct|Sect)*>
+<!ELEMENT H2 (%Inline;|NonStruct|Sect)*>
 <!ATTLIST H2 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H3 (%Inline;|Artifact|Figure|NonStruct|Sect)*>
+<!ELEMENT H3 (%Inline;|NonStruct|Sect)*>
 <!ATTLIST H3 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H4 (%Inline;|Artifact|Figure|NonStruct|Sect)*>
+<!ELEMENT H4 (%Inline;|NonStruct|Sect)*>
 <!ATTLIST H4 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H5 (%Inline;|Artifact|Figure|NonStruct|Sect)*>
+<!ELEMENT H5 (%Inline;|NonStruct|Sect)*>
 <!ATTLIST H5 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT H6 (%Inline;|Artifact|Figure|NonStruct|Sect)*>
+<!ELEMENT H6 (%Inline;|NonStruct|Sect)*>
 <!ATTLIST H6 %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Index (%Hdr;|%Part;|%StructMisc;|BlockQuote|Caption|FENote|Index|L|LBody|LI|Lbl|P|Sub|TOC|Table|Title)*>
+<!ELEMENT Index (%Hdr;|%Part;|%StructMisc;|Artifact|BlockQuote|Caption|FENote|Figure|Formula|Index|L|LBody|LI|P|Sub|TOC|Table|Title)*>
 <!ATTLIST Index %attsAny;>
 
-<!ELEMENT L (%Inline;|Artifact|Caption|NonStruct)*>
+<!ELEMENT L (%Inline;|NonStruct)*>
 <!ATTLIST L %attsAny; %attsBLSE; %attsILSE; %attsList;>
 
-<!ELEMENT LBody (%Inline;|Artifact|Aside|Caption|Div|Figure|NonStruct|Part|Sect)*>
+<!ELEMENT LBody (%Inline;|Aside|Div|NonStruct|Part|Sect)*>
 <!ATTLIST LBody %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT LI (%Inline;|Artifact|Div|NonStruct)*>
+<!ELEMENT LI (%Inline;|Div|NonStruct)*>
 <!ATTLIST LI %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Lbl (%Inline;|Artifact|Figure|NonStruct)*>
+<!ELEMENT Lbl (%Inline;|NonStruct)*>
 <!ATTLIST Lbl %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Link (%Inline;|Artifact|Aside|Caption|Div|DocumentFragment|Figure|NonStruct|Part|Sect)*>
+<!ELEMENT Link (%Inline;|Aside|Div|DocumentFragment|NonStruct|Part|Sect)*>
 <!ATTLIST Link %attsAny; %attsBLSE; %attsILSE; href CDATA #IMPLIED>
 
-<!ELEMENT NonStruct (%Inline;|%Part;|%StructMisc;|Artifact|BlockQuote|Caption|DocumentFragment|Figure|Index|RB|RP|RT|TBody|TD|TFoot|TH|THead|TOC|TR|WP|WT)*>
+<!ELEMENT NonStruct (%Inline;|%Part;|%StructMisc;|BlockQuote|DocumentFragment|Index|RB|RP|RT|TBody|TD|TFoot|TH|THead|TOC|TR|WP|WT)*>
 <!ATTLIST NonStruct %attsAny;>
 
 <!ELEMENT Note (%Inline;)*>
 <!ATTLIST Note %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT P (%Inline;|Artifact|Figure|NonStruct)*>
+<!ELEMENT P (%Inline;|NonStruct)*>
 <!ATTLIST P %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT Part (%Block;|%Hdr;|%Part;|%StructMisc;|Annot|Artifact|DocumentFragment|FENote|LBody|LI|Lbl|Link|Sub|Title)*>
 <!ATTLIST Part %attsAny;>
 
-<!ELEMENT Private (%Hdr;|%Part;|%StructMisc;|BlockQuote|Caption|FENote|Index|L|LBody|LI|Lbl|P|Sub|TOC|Table|Title)*>
+<!ELEMENT Private (%Hdr;|%Part;|%StructMisc;|Artifact|BlockQuote|Caption|FENote|Figure|Formula|Index|L|LBody|LI|P|Sub|TOC|Table|Title)*>
 <!ATTLIST Private %attsAny;>
 
 <!ELEMENT Quote (%Inline;)*>
 <!ATTLIST Quote %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT RB (%Inline;|Artifact|NonStruct)*>
+<!ELEMENT RB (%Inline;|NonStruct)*>
 <!ATTLIST RB %attsAny; %attsRuby;>
 
-<!ELEMENT RP (%Inline;|Artifact|NonStruct)*>
+<!ELEMENT RP (%Inline;|NonStruct)*>
 <!ATTLIST RP %attsAny; %attsRuby;>
 
-<!ELEMENT RT (%Inline;|Artifact|NonStruct)*>
+<!ELEMENT RT (%Inline;|NonStruct)*>
 <!ATTLIST RT %attsAny; %attsRuby;>
 
 <!ELEMENT Reference (%Inline;)*>
@@ -199,52 +194,52 @@
 <!ELEMENT Sect (%Block;|%Hdr;|%Part;|%StructMisc;|Annot|Artifact|DocumentFragment|FENote|LBody|LI|Lbl|Link|Sub|Title)*>
 <!ATTLIST Sect %attsAny; %attsCols;>
 
-<!ELEMENT Span (%Inline;|Artifact|Figure|NonStruct)*>
+<!ELEMENT Span (%Inline;|NonStruct)*>
 <!ATTLIST Span %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT Strong (%Inline;|Artifact|Figure|NonStruct)*>
+<!ELEMENT Strong (%Inline;|NonStruct)*>
 <!ATTLIST Strong %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT StructTreeRoot (Document)*>
 <!ATTLIST StructTreeRoot %attsAny;>
 
-<!ELEMENT Sub (%Inline;|Artifact|Figure|NonStruct)*>
+<!ELEMENT Sub (%Inline;|NonStruct)*>
 <!ATTLIST Sub %attsAny; %attsBLSE; %attsILSE;>
 
 <!ELEMENT TBody (Artifact|NonStruct|TR)*>
 <!ATTLIST TBody %attsAny;>
 
-<!ELEMENT TD (%Inline;|Artifact|Div|Figure|NonStruct|Sect)*>
+<!ELEMENT TD (%Inline;|Div|NonStruct|Sect)*>
 <!ATTLIST TD %attsAny; %attsCell;>
 
 <!ELEMENT TFoot (Artifact|NonStruct|TR)*>
 <!ATTLIST TFoot %attsAny;>
 
-<!ELEMENT TH (%Inline;|Artifact|Div|Figure|NonStruct|Sect)*>
+<!ELEMENT TH (%Inline;|Div|NonStruct|Sect)*>
 <!ATTLIST TH %attsAny; %attsCell;>
 
 <!ELEMENT THead (Artifact|NonStruct|TR)*>
 <!ATTLIST THead %attsAny;>
 
-<!ELEMENT TOC (%Hdr;|%Part;|%StructMisc;|BlockQuote|Caption|FENote|Index|L|LBody|LI|Lbl|P|Sub|TOC|Table|Title)*>
+<!ELEMENT TOC (%Hdr;|%Part;|%StructMisc;|Artifact|BlockQuote|Caption|FENote|Figure|Formula|Index|L|LBody|LI|P|Sub|TOC|Table|Title)*>
 <!ATTLIST TOC %attsAny;>
 
-<!ELEMENT TOCI (%Hdr;|%Part;|%StructMisc;|BlockQuote|Caption|FENote|Index|L|LBody|LI|Lbl|P|Reference|Sub|TOC|Table|Title)*>
+<!ELEMENT TOCI (%Hdr;|%Part;|%StructMisc;|Artifact|BlockQuote|Caption|FENote|Figure|Formula|Index|L|LBody|LI|Lbl|P|Reference|Sub|TOC|Table|Title)*>
 <!ATTLIST TOCI %attsAny;>
 
 <!ELEMENT TR (Artifact|NonStruct|TD|TH)*>
 <!ATTLIST TR %attsAny;>
 
-<!ELEMENT Table (%Inline;|Artifact|Caption|NonStruct|TBody|TFoot|THead|TR)*>
+<!ELEMENT Table (%Inline;|NonStruct|TBody|TFoot|THead|TR)*>
 <!ATTLIST Table %attsAny; %attsBLSE; %attsILSE; %attsTable;>
 
-<!ELEMENT Title (%Inline;|Artifact|Aside|Caption|Div|Figure|NonStruct|Part)*>
+<!ELEMENT Title (%Inline;|Aside|Div|NonStruct|Part)*>
 <!ATTLIST Title %attsAny; %attsBLSE; %attsILSE;>
 
-<!ELEMENT WP (%Inline;|Artifact|Figure|NonStruct)*>
+<!ELEMENT WP (%Inline;|NonStruct)*>
 <!ATTLIST WP %attsAny;>
 
-<!ELEMENT WT (%Inline;|Artifact|NonStruct)*>
+<!ELEMENT WT (%Inline;|NonStruct)*>
 <!ATTLIST WT %attsAny;>
 
 <!ELEMENT Warichu (%Inline;|NonStruct|WP|WT)*>

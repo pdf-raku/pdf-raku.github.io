@@ -1,8 +1,8 @@
 module DtD {
     # resources take from the ISO-32000 PDF specification
-    constant BLSE    = set <P H H1 H2 H3 H4 H5 H6 L LI Lbl LBody Table Title FENote Sub>;
-    constant ILSE    = set <Span Quote Note Reference BibEntry Code Link Annot Ruby Warichu Em Strong Form #PCDATA>;
-    constant GROUP   = set <Document Part Art Aside Sect Div BlockQuote Caption TOC TOCI Index NonStruct Private>;
+    constant BLSE    = set <P H H1 H2 H3 H4 H5 H6 L LI LBody Table Title FENote Sub Caption Figure Formula Artifact>;
+    constant ILSE    = set <Span Quote Note Reference BibEntry Code Lbl L Link Annot Ruby Warichu Em Strong Form #PCDATA Figure Formula Artifact>;
+    constant GROUP   = set <Document Part Art Aside Sect Div BlockQuote Caption TOC TOCI Index NonStruct Private Figure Formula Artifact>;
     constant WARICHU = set <WT WP>;
     constant RUBY    = set <RB RT RP>;
     constant FRAG    = set <DocumentFragment>;
@@ -15,7 +15,7 @@ module DtD {
                 my ($elems, $desc, $parents, $kids) = .split: "\t";
                 my @parents = $parents.split(", ").map(&Hn);
                 my @kids = $kids.split(", ")
-                            if $kids.defined && $kids ~~ /^[<alnum>+] * % ', '$/;
+                    if $kids.defined && $kids ~~ /^[<alnum>+] * % ', '$/;
                 for $elems.split(", ") -> $e {
                     %elems{$e} //= %();
                     for @parents -> $p {
@@ -227,13 +227,6 @@ DtD::reconcile(%elems, %ents);
     "TPadding CDATA #IMPLIED",
     "Width CDATA #IMPLIED",
 ).join: "\n\t";
-%ents<attsIllustration> = (
-    "",
-    "BBox CDATA #IMPLIED",
-    "BaselineShift CDATA #IMPLIED",
-    "Height CDATA #IMPLIED",
-    "Width CDATA #IMPLIED",
-).join: "\n\t";
 %ents<attsCols> = (
     "",
     "ColumnCount CDATA #IMPLIED",
@@ -260,7 +253,6 @@ my %atts;
 %atts<L>.push: '%attsList;', for <L>;
 %atts{$_}.push: '%attsCell;' for <TH TD>;
 %atts{$_}.push: '%attsRuby;' for DtD::RUBY.keys;
-%atts{$_}.push: '%attsIllustration;' for <Figure Formula>;
 %atts<Link>.push: 'href CDATA #IMPLIED';
 %atts<Table>.push: '%attsTable;' for <Table TR TH TD THead TBody TFoot>;
 
