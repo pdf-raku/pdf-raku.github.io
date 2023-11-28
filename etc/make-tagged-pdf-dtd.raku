@@ -29,11 +29,13 @@ module DtD {
             }
         }
         # vivify inline elements
-        for %ents<Inline>.Slip {
-            %elems{$_}<%Inline;>++;
+        for %ents<Inline>.Slip, <H Lbl TH TD Caption>.Slip -> $i {
+            for %ents<Inline>.Slip -> $j {
+                %elems{$i}{$j}++;
+            }
         }
 
-        # Populate some elements no specifically covered in the CSV files
+        # Populate some elements not specifically covered in the CSV files
 
         for GROUP.keys -> $grp {
             for GROUP.keys -> $grp2 {
@@ -44,8 +46,6 @@ module DtD {
             }
         }
 
-        %elems{$_}<%Inline;>++ for <H Lbl TH TD Caption>;
-
         %elems;
     }
 
@@ -53,14 +53,15 @@ module DtD {
     multi sub Hn('Hn') { ('H1'..'H6').Slip; }
     multi sub Hn($_) { $_  }
 
-    our sub load-elems2(%elems) {
+    our sub load-elems2(%elems, %ents) {
         # resources taken from the ISO-32000-2 PDF 2.0  Spec
         use JSON::Fast;
         my %table = from-json 'etc/Table_Annex_L2-Parent-child_relationships_between_the_standard_structure_elements_in_the_standard_structure_namespace_for_PDF_20.json'.IO.slurp;
 
+        my $inline =  %ents<Inline>.join: ' ';
         for %table<table><rows>.List {
             for Hn(.[0]) -> $p {
-                my @kids = .[2].subst('content item', '%Inline;').split(' ').map: &Hn;
+                my @kids = .[2].subst('content item', $inline).split(' ').map: &Hn;
                 %elems{$p}{$_}++ for @kids;
             }
         }
@@ -92,18 +93,7 @@ module DtD {
         }
     }
 
-    our sub output(%elems, %ents, %atts) {
-        say q:to<END>;
-        <!-- Non normative XML DtD for tagged PDF XML serialization. Based on:
-              - PDF ISO-32000 1.7 Specification,
-                - Section 14.8.4 Standard Structure Types
-                - Section 14.8.5 Standard Structure Attributes
-              - https://accessible-pdf.info/basics/general/overview-of-the-pdf-tags
-
-             Not applying ordering or arity constraints on child nodes
-        -->
-        END
-
+    our sub merge(%elems, %ents) {
         for %ents.sort(*.value.elems).reverse {
             my $k = .key;
             my $v = .value;
@@ -126,6 +116,19 @@ module DtD {
             }
             %ents{$k} = @v;
         }
+    }
+
+    our sub output(%elems, %ents, %atts) {
+        say q:to<END>;
+        <!-- Non normative XML DtD for tagged PDF XML serialization. Based on:
+              - PDF ISO-32000 1.7 Specification,
+                - Section 14.8.4 Standard Structure Types
+                - Section 14.8.5 Standard Structure Attributes
+              - https://accessible-pdf.info/basics/general/overview-of-the-pdf-tags
+
+             Not applying ordering or arity constraints on child nodes
+        -->
+        END
 
         for %ents.sort {
             my $k = .key;
@@ -156,7 +159,7 @@ module DtD {
 our %ents = :Hdr<H H1 H2 H3 H4 H5 H6>,
             :SubPart<Art Sect Div>,
             :Inline(
-                <Span Quote Note Reference Code Link Annot Formula>.Slip,
+                <Span Quote Note FENote Reference Code Link Annot Formula BibEntry>.Slip,
                 DtD::BLSE.keys.Slip),
             :Block<BlockQuote Caption Figure Form Formula Index L P TOC Table>,
             :StructMisc<NonStruct Private>,
@@ -164,7 +167,8 @@ our %ents = :Hdr<H H1 H2 H3 H4 H5 H6>,
 ;
 
 my %elems = DtD::load-elems(%ents);
-DtD::load-elems2(%elems);
+DtD::load-elems2(%elems,%ents);
+DtD::merge(%elems, %ents);
 DtD::remove-dups(%elems, %ents);
 DtD::reconcile(%elems, %ents);
 %ents<attsAny> = (
