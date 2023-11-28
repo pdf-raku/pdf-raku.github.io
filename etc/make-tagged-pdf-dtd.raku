@@ -162,7 +162,7 @@ our %ents = :Hdr<H H1 H2 H3 H4 H5 H6>,
                 <Span Quote Note FENote Reference Code Link Annot Formula BibEntry>.Slip,
                 DtD::BLSE.keys.Slip),
             :Block<BlockQuote Caption Figure Form Formula Index L P TOC Table>,
-            :StructMisc<NonStruct Private>,
+            :StructMisc<NonStruct Private Aside TOCI>,
             :Part<Document Part Art Sect Div>,
 ;
 
