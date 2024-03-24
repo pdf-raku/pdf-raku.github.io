@@ -56,7 +56,7 @@ module DtD {
     our sub load-elems2(%elems, %ents) {
         # resources taken from the ISO-32000-2 PDF 2.0  Spec
         use JSON::Fast;
-        my %table = from-json 'etc/Table_Annex_L2-Parent-child_relationships_between_the_standard_structure_elements_in_the_standard_structure_namespace_for_PDF_20.json'.IO.slurp;
+        my %table = from-json 'src/Table_Annex_L2-Parent-child_relationships_between_the_standard_structure_elements_in_the_standard_structure_namespace_for_PDF_20.json'.IO.slurp;
 
         my $inline =  %ents<Inline>.join: ' ';
         for %table<table><rows>.List {
@@ -250,11 +250,11 @@ my %atts;
 %atts{$_}.push: '%attsBLSE;' for DtD::BLSE.keys;
 %atts{$_}.push: '%attsILSE;' for DtD::ILSE.keys.Slip, DtD::BLSE.keys.Slip;
 %atts{$_}.push: '%attsCols;' for <Art Sect Div>;
-%atts<L>.push: '%attsList;', for <L>;
 %atts{$_}.push: '%attsCell;' for <TH TD>;
 %atts{$_}.push: '%attsRuby;' for DtD::RUBY.keys;
+%atts<L>.push: '%attsList;';
 %atts<Link>.push: 'href CDATA #IMPLIED';
-%atts<Table>.push: '%attsTable;' for <Table TR TH TD THead TBody TFoot>;
+%atts<Table>.push: '%attsTable;';
 
 # BLSE attributes are only applicable to ILSEs with Placement
 # other than inline
