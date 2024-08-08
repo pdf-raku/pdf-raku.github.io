@@ -28,16 +28,16 @@ Module | Description | Compatibility
 
 #### [PDF::Lite](https://pdf-raku.github.io/PDF-Lite-raku/) and [PDF::API6](https://pdf-raku.github.io/PDF-API6/) Dependencies:
 
-##### [PDF::Content](https://pdf-raku.github.io/PDF-Content-raku/) - PDF Content Manipulation
-##### [PDF](https://pdf-raku.github.io/PDF-raku/) - Low-level PDF Manipulation
-##### [PDF::Grammar](https://pdf-raku.github.io/PDF-Grammar-raku/) - PDF-related grammars
-##### [Font::AFM](https://pdf-raku.github.io/Font-AFM-raku/) - AFM Font Metrics for Type-1 and core fonts
-##### [Font::FreeType](https://pdf-raku.github.io/Font-FreeType-raku/) - FreeType font-library bindings
+- [PDF::Content](https://pdf-raku.github.io/PDF-Content-raku/) - PDF Content Manipulation
+- [PDF](https://pdf-raku.github.io/PDF-raku/) - Low-level PDF Manipulation
+- [PDF::Grammar](https://pdf-raku.github.io/PDF-Grammar-raku/) - PDF-related grammars
+- [Font::AFM](https://pdf-raku.github.io/Font-AFM-raku/) - AFM Font Metrics for Type-1 and core fonts
+- [Font::FreeType](https://pdf-raku.github.io/Font-FreeType-raku/) - FreeType font-library bindings
 
 #### [PDF::API6](https://pdf-raku.github.io/PDF-API6/) Only Dependencies:
 
-##### [PDF::ISO_32000](https://pdf-raku.github.io/PDF-ISO_32000-raku/) - Mined resources from the PDF 1.7 specification
-##### [XML Dump of ISO-32000 1](https://raw.githack.com/pdf-raku/PDF-ISO_32000-Builder-raku/master/PDF-ISO_32000.xml)
-##### [PDF::ISO_32000_2](https://pdf-raku.github.io/PDF-ISO_32000_2-raku/) - Mined resources from the PDF 2.0 specification
+- [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/) - PDF Object Classes
+- [PDF::ISO_32000](https://pdf-raku.github.io/PDF-ISO_32000-raku/) - Mined resources from the PDF 1.7 specification
+- [XML Dump of ISO-32000 1](https://raw.githack.com/pdf-raku/PDF-ISO_32000-Builder-raku/master/PDF-ISO_32000.xml)
+- [PDF::ISO_32000_2](https://pdf-raku.github.io/PDF-ISO_32000_2-raku/) - Mined resources from the PDF 2.0 specification
 
-##### [PDF::Class](https://pdf-raku.github.io/PDF-Class-raku/) - PDF Object Classes
