@@ -20,6 +20,7 @@ multi sub resolve-class(*@path ( 'PDF', 'Native', *@)) { %( :repo<PDF-Native-rak
 multi sub resolve-class(*@path ( 'Font', 'FreeType', *@)) { %( :repo<Font-FreeType-raku>, :@path ) }
 multi sub resolve-class(*@path ( 'FontConfig', *@)) { %( :repo<FontConfig-raku>, :@path ) }
 multi sub resolve-class(*@ ('PDF', 'Font', 'Loader', 'CSS', *@)) { %( :repo<PDF-Font-Loader-CSS-raku> ) }
+multi sub resolve-class(*@ ('PDF', 'Font', 'Loader', 'HarfBuzz', *@)) { %( :repo<PDF-Font-Loader-HarfBuzz-raku> ) }
 multi sub resolve-class(*@path ('PDF', 'Font', 'Loader', *@)) { %( :repo<PDF-Font-Loader-raku>, :@path ) }
 
 multi sub resolve-class('Font', 'AFM') { %( :repo<Font-AFM-raku> ) }
