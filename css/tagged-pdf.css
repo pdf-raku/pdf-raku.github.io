@@ -1,23 +1,24 @@
 :focus           { outline: thin dotted invert }
-:link, :visited  { text-decoration: underline }
-Annot, Link      { text-decoration: underline }
 :link, Link      { color: #00f }
 :visited         { color: #800080; }
+:link, :visited, Annot, Link, Title, H, H1  { text-decoration: underline }
+P, H, H1, H2, H3, H4, H5, H6, Lbl, LBody, Title { display: block; unicode-bidi: embed }
+Span, Quote, Note, Reference, BibEntry, Code, Link, Annot, Strong, Em, Mark, Artifact { display: inline }
 BlockQuote       { margin-left: 40px; margin-right: 40px }
 Caption          { display: table-caption; text-align: center }
-Code             { font-family: monospace; white-space: pre }
+Code             { font-family: monospace; white-space: pre; font-size: .85em }
 Document         { margin: 8px }
-Document, Part, Art, Sect, Div, BlockQuote, Caption, TOC, Index, H, H1, H2, H3, H4, H5, H6, P, Index, L { display: block; unicode-bidi: embed }
+Title            { font-size: 2.5em; margin: .5em 0 }
 H, H1            { font-size: 2em; margin: .67em 0 }
-H1, H2, H3, H4, H5, H6, Strong { font-weight: bolder }
+Title, H1, H2, H3, H4, Strong { font-weight: bolder }
 H2               { font-size: 1.5em; margin: .75em 0 }
 H3               { font-size: 1.17em; margin: .83em 0 }
-H4, P, Blockquote, Form { margin: 1.12em 0 }
-H5               { font-size: .83em; margin: 1.5em 0 }
-H6               { font-size: .75em; margin: 1.67em 0 }
+H4, P, BlockQuote, Form { margin: 1.12em 0 }
+H5               { font-size: .83em; margin: 1.5em 0; font-style: italic }
+H6               { font-size: .75em; margin: 1.67em 0; font-style: italic }
 L                { margin-top: 0; margin-bottom: 0; }
 NonStruct        { display: none }
-Quote, Reference, Em { font-style: italic }
+Caption, Quote, Reference, Em { font-style: italic }
 RT, WT           { font-size: smaller }
 TBody            { display: table-row-group }
 TD, TH           { display: table-cell; border: 1px solid; padding: 5px}
@@ -26,14 +27,13 @@ TFoot            { display: table-footer-group }
 TH               { font-weight: bolder; text-align: center }
 THead            { display: table-header-group }
 THead, TBody, TFoot { vertical-align: middle }
-TOCI, LI       {  margin-left: 40px; display: list-item; list-style-type: none;}
-Lbl, LBody, LBody P { display: inline }
+TOCI, LI         { margin-left: 40px; display: list-item; list-style-type: none; }
 TR               { display: table-row }
-Table            { display: table }
+Table            { display: table; margin: .5em 0 0 }
 
 @media print {
-    H, H1        { page-break-before: always }
+    H, H1, Title  { page-break-before: always }
     H1, H2, H3,
-    H4, H5, H6   { page-break-after: avoid }
+    H4, H5, H6, Table, THead, P, LI, BockQuote { page-break-after: avoid }
     L            { page-break-before: avoid }
 }
