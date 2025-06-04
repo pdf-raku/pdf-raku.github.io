@@ -11,7 +11,7 @@
 
 <!ENTITY % Block "BlockQuote|Caption|Figure|Form|Formula|Index|L|P|TOC|Table">
 <!ENTITY % Hdr "H|H1|H2|H3|H4|H5|H6">
-<!ENTITY % Inline "#PCDATA|Annot|Artifact|BibEntry|Caption|Code|Em|FENote|Figure|Form|Formula|H|H1|H2|H3|H4|H5|H6|L|LBody|LI|Lbl|Link|Note|P|Quote|Reference|Ruby|Span|Strong|Sub|Table|Title|Warichu">
+<!ENTITY % Inline "#PCDATA|Annot|Artifact|BibEntry|Caption|Code|Em|FENote|Figure|Form|Formula|H|H1|H2|H3|H4|H5|H6|L|LBody|LI|Lbl|Link|Mark|Note|P|Quote|Reference|Ruby|Span|Strong|Sub|Table|Title|Warichu">
 <!ENTITY % Part "Art|Div|Document|Part|Sect">
 <!ENTITY % StructMisc "Aside|NonStruct|Private|TOCI">
 <!ENTITY % SubPart "Art|Div|Sect">

@@ -1,7 +1,7 @@
 module DtD {
     # resources take from the ISO-32000 PDF specification
     constant BLSE    = set <P H H1 H2 H3 H4 H5 H6 L LI LBody Table Title FENote Sub Caption Figure Formula Artifact>;
-    constant ILSE    = set <Span Quote Note Reference BibEntry Code Lbl L Link Annot Ruby Warichu Em Strong Form #PCDATA Figure Formula Artifact>;
+    constant ILSE    = set <Span Quote Note Reference BibEntry Code Lbl L Link Annot Ruby Warichu Em Strong Form #PCDATA Figure Formula Artifact Mark>;
     constant GROUP   = set <Document Part Art Aside Sect Div BlockQuote Caption TOC TOCI Index NonStruct Private Figure Formula Artifact>;
     constant WARICHU = set <WT WP>;
     constant RUBY    = set <RB RT RP>;
@@ -76,7 +76,7 @@ module DtD {
         %refs{'%' ~ $_ ~ ';'}:delete
             for %ents.keys;
         %refs{$_}:delete
-            for <#PCDATA ANY EMPTY>;
+            for <#PCDATA ANY EMPTY Mark>;
 
         die join "\n", ("unresolved references:", %refs.keys.sort.Slip)
             if %refs;
@@ -104,7 +104,7 @@ module DtD {
                     %kids{'%' ~ $k ~ ';'}++;
                 }
             }
-            # bring in additional entities mentioned in the artical, but not fully specced;
+            # bring in additional entities mentioned in the article, but not fully specced;
             my @mentions = do given $k {
                 when 'Hdr' {'H'}
                 when 'Inline' { DtD::ILSE.keys.grep: {$v{$_}:!exists} }
