@@ -186,7 +186,7 @@ DtD::reconcile(%elems, %ents);
     "WritingMode (LrTb|RlTb|TbRl) 'LrTb'",
     "role CDATA #IMPLIED",
 ).join: "\n\t";
-%ents<attsBLSE> = (
+%ents<AttsSE> = (
     "",
     "BBox CDATA #IMPLIED",
     "BlockAlign (Before|Middle|After|Justify) 'Before'",
@@ -202,9 +202,7 @@ DtD::reconcile(%elems, %ents);
     "TextIndent CDATA #IMPLIED",
     "Width CDATA #IMPLIED",
     "class CDATA #IMPLIED",
-).join: "\n\t";
-%ents<attsILSE> = (
-    "",
+
     "BaselineShift CDATA #IMPLIED",    
     "GlyphOrientationVertical CDATA #IMPLIED",
     "LineHeight CDATA #IMPLIED",    
@@ -247,8 +245,7 @@ DtD::reconcile(%elems, %ents);
 ).join: "\n\t";
 my %atts;
 %atts{$_}.push: '%attsAny;' for %elems.keys;
-%atts{$_}.push: '%attsBLSE;' for DtD::BLSE.keys;
-%atts{$_}.push: '%attsILSE;' for DtD::ILSE.keys.Slip, DtD::BLSE.keys.Slip;
+%atts{$_}.push: '%AttsSE;' for DtD::ILSE.keys.Slip, DtD::BLSE.keys.Slip;
 %atts{$_}.push: '%attsCols;' for <Art Sect Div>;
 %atts{$_}.push: '%attsCell;' for <TH TD>;
 %atts{$_}.push: '%attsRuby;' for DtD::RUBY.keys;
@@ -258,6 +255,5 @@ my %atts;
 
 # BLSE attributes are only applicable to ILSEs with Placement
 # other than inline
-%atts{$_}.push: '%attsBLSE;' for DtD::ILSE.keys;
 
 DtD::output(%elems, %ents, %atts);
