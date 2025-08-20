@@ -8,11 +8,19 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
       </body>
     </html>
   </xsl:template>
-  <xsl:template match="Link">
+  <xsl:template match="Link[@href]">
     <!-- /Link href="xxx" -> a href="xxx" -->
     <a>
       <xsl:apply-templates select="@*|node()"/>
     </a>
+  </xsl:template>
+  <xsl:template match="L/LI/Lbl">
+    <!-- Discard superflous Lbl tags in list items -->
+  </xsl:template>
+  <xsl:template match="L">
+    <ul>
+      <xsl:apply-templates/>
+    </ul>
   </xsl:template>
   <xsl:template match="FENote|Note">
     <!-- /FENote /Note -> /fn -->
@@ -26,7 +34,12 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
        <xsl:apply-templates/>
     </u>
   </xsl:template>
-  <xsl:template match="Artifact|Reference|DocumentFragment|RB|RT|Warichu|RP|RT|Artifact|TagSuspect|ReversedChars|Clip|BibEntry|Annot|Formula|Form">
+  <xsl:template match="TOCI|DocumentFragment|Formula|Form">
+    <div>
+      <xsl:apply-templates/>
+    </div>
+  </xsl:template>
+  <xsl:template match="Artifact|Reference|RB|RT|Warichu|RP|RT|TagSuspect|ReversedChars|Clip|BibEntry|Annot|Link|LBody">
     <!-- currently omitted tags -->
     <xsl:apply-templates/>
   </xsl:template>
