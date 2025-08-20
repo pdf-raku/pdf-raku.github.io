@@ -147,10 +147,8 @@ module DtD {
                 ?? @v.head
                 !! "({@v.join: '|'})*";
             say "<!ELEMENT $k $rhs>";
-            unless $k eq 'DocumentFragment' {
-                with %atts{$k}.sort.unique {
-                    say "<!ATTLIST $k {.join: ' '}>";
-                }
+            with %atts{$k}.sort.unique {
+                say "<!ATTLIST $k {.join: ' '}>";
             }
             say '';
         }
@@ -243,6 +241,12 @@ DtD::reconcile(%elems, %ents);
     "",
     "ListNumbering (None|Disc|Circle|Square|Decimal|UpperRoman|LowerRoman|UpperAlpha|LowerAlpha) 'None'",
 ).join: "\n\t";
+%ents<attsDoc> = (
+    "",
+    "Author CDATA #IMPLIED",
+    "Subject CDATA #IMPLIED",
+    "Title CDATA #IMPLIED",
+).join: "\n\t";
 my %atts;
 %atts{$_}.push: '%attsAny;' for %elems.keys;
 %atts{$_}.push: '%AttsSE;' for DtD::ILSE.keys.Slip, DtD::BLSE.keys.Slip;
@@ -252,8 +256,6 @@ my %atts;
 %atts<L>.push: '%attsList;';
 %atts<Link>.push: 'href CDATA #IMPLIED';
 %atts<Table>.push: '%attsTable;';
-
-# BLSE attributes are only applicable to ILSEs with Placement
-# other than inline
+%atts{$_}.push: '%attsDoc;' for <Document DocumentFragment>;
 
 DtD::output(%elems, %ents, %atts);
