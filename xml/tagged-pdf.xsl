@@ -25,7 +25,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:template match="FENote|Note">
     <!-- /FENote /Note -> /fn -->
     <fn>
-      <xsl:apply-templates/>
+      <xsl:apply-templates select="@*|node()"/>
     </fn>
   </xsl:template>
   <xsl:template match="Span[@TextDecorationType='Underline']">
@@ -37,12 +37,20 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:template match="TOC|DocumentFragment|Formula|Form|Part|Art|Sect|Index">
     <!-- currently omitted block tags -->
     <div>
+      <xsl:attribute name="class">
+        <xsl:value-of select="name(.)"/>
+      </xsl:attribute>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
   <xsl:template match="Artifact|Reference|RB|RT|Warichu|RP|RT|TagSuspect|ReversedChars|Clip|BibEntry|Annot|Link|LBody|TOCI">
-    <!-- currently omitted inline tags -->
-    <xsl:apply-templates/>
+    <!-- currently ignored inline tags -->
+    <span>
+      <xsl:attribute name="class">
+        <xsl:value-of select="name(.)"/>
+      </xsl:attribute>
+      <xsl:apply-templates/>
+    </span>
   </xsl:template>
   <xsl:template match="Mark">
     <!-- marked content region -->
@@ -51,7 +59,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:template match="@*|node()">
     <!-- Identity transform -->
     <xsl:copy>
-      <xsl:apply-templates/>
+      <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
 </xsl:stylesheet>
