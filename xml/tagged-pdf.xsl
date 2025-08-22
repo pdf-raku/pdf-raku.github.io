@@ -34,13 +34,14 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
        <xsl:apply-templates/>
     </u>
   </xsl:template>
-  <xsl:template match="TOCI|DocumentFragment|Formula|Form">
+  <xsl:template match="TOC|DocumentFragment|Formula|Form|Part|Art|Sect|Index">
+    <!-- currently omitted block tags -->
     <div>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
-  <xsl:template match="Artifact|Reference|RB|RT|Warichu|RP|RT|TagSuspect|ReversedChars|Clip|BibEntry|Annot|Link|LBody">
-    <!-- currently omitted tags -->
+  <xsl:template match="Artifact|Reference|RB|RT|Warichu|RP|RT|TagSuspect|ReversedChars|Clip|BibEntry|Annot|Link|LBody|TOCI">
+    <!-- currently omitted inline tags -->
     <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="Mark">
