@@ -183,8 +183,9 @@ DtD::reconcile(%elems, %ents);
     "Placement (Block|Inline|Before|Start|End) #IMPLIED",
     "WritingMode (LrTb|RlTb|TbRl) 'LrTb'",
     "role CDATA #IMPLIED",
-).join: "\n\t";
-%ents<AttsSE> = (
+    "class CDATA #IMPLIED",
+).sort.join: "\n\t";
+%ents<attsSE> = (
     "",
     "BBox CDATA #IMPLIED",
     "BlockAlign (Before|Middle|After|Justify) 'Before'",
@@ -199,8 +200,6 @@ DtD::reconcile(%elems, %ents);
     "TextAlign (Start|Center|End|Justify) 'Start'",
     "TextIndent CDATA #IMPLIED",
     "Width CDATA #IMPLIED",
-    "class CDATA #IMPLIED",
-
     "BaselineShift CDATA #IMPLIED",    
     "GlyphOrientationVertical CDATA #IMPLIED",
     "LineHeight CDATA #IMPLIED",    
@@ -209,7 +208,7 @@ DtD::reconcile(%elems, %ents);
     "TextDecorationColor CDATA #IMPLIED",    
     "TextDecorationThickness CDATA #IMPLIED",
     "TextDecorationType (None|Underline|Overline|LineThrough) 'None'",
-).join: "\n\t";
+).sort.join: "\n\t";
 %ents<attsCell> = (
     "",
     "BlockAlign (Before|Middle|After|Justify) 'Before'",
@@ -249,13 +248,17 @@ DtD::reconcile(%elems, %ents);
 ).join: "\n\t";
 my %atts;
 %atts{$_}.push: '%attsAny;' for %elems.keys;
-%atts{$_}.push: '%AttsSE;' for DtD::ILSE.keys.Slip, DtD::BLSE.keys.Slip;
+%atts{$_}.push: '%attsSE;' for DtD::ILSE.keys.Slip, DtD::BLSE.keys.Slip;
 %atts{$_}.push: '%attsCols;' for <Art Sect Div>;
 %atts{$_}.push: '%attsCell;' for <TH TD>;
 %atts{$_}.push: '%attsRuby;' for DtD::RUBY.keys;
 %atts<L>.push: '%attsList;';
-%atts<Link>.push: 'href CDATA #IMPLIED';
 %atts<Table>.push: '%attsTable;';
 %atts{$_}.push: '%attsDoc;' for <Document DocumentFragment>;
+
+# Artifacts of XML serialization
+%elems<Mark>{$_}++ for  DtD::ILSE.keys.Slip, DtD::BLSE.keys.Slip;
+%atts<Mark> = ('MCID CDATA #IMPLIED', 'Pg CDATA #IMPLIED', 'Stm CDATA #IMPLIED').join: "\n\t";;
+%atts<Link>.push: 'href CDATA #IMPLIED';
 
 DtD::output(%elems, %ents, %atts);
