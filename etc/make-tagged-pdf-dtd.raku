@@ -240,11 +240,17 @@ DtD::reconcile(%elems, %ents);
     "",
     "ListNumbering (None|Disc|Circle|Square|Decimal|UpperRoman|LowerRoman|UpperAlpha|LowerAlpha) 'None'",
 ).join: "\n\t";
-%ents<attsDoc> = (
+%ents<attsInfo> = (
     "",
     "Author CDATA #IMPLIED",
     "Subject CDATA #IMPLIED",
     "Title CDATA #IMPLIED",
+    "Keywords CDATA #IMPLIED",
+    "Creator CDATA #IMPLIED",
+    "Producer CDATA #IMPLIED",
+    "CreationDate CDATA #IMPLIED",
+    "ModDate CDATA #IMPLIED",
+    "Trapping CDATA #IMPLIED",
 ).join: "\n\t";
 my %atts;
 %atts{$_}.push: '%attsAny;' for %elems.keys;
@@ -254,11 +260,11 @@ my %atts;
 %atts{$_}.push: '%attsRuby;' for DtD::RUBY.keys;
 %atts<L>.push: '%attsList;';
 %atts<Table>.push: '%attsTable;';
-%atts{$_}.push: '%attsDoc;' for <Document DocumentFragment>;
+%atts{$_}.push: '%attsInfo;' for <Document DocumentFragment>;
 
 # Artifacts of XML serialization
 %elems<Mark>{$_}++ for  DtD::ILSE.keys.Slip, DtD::BLSE.keys.Slip;
-%atts<Mark> = ('MCID CDATA #IMPLIED', 'Pg CDATA #IMPLIED', 'Stm CDATA #IMPLIED').join: "\n\t";;
+%atts<Mark> = ('MCID CDATA #IMPLIED', 'Pg CDATA #IMPLIED', 'Stm CDATA #IMPLIED').join: "\n\t";
 %atts<Link>.push: 'href CDATA #IMPLIED';
 
 DtD::output(%elems, %ents, %atts);

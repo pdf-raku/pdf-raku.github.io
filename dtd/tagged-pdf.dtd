@@ -42,10 +42,16 @@
 	ColumnCount CDATA #IMPLIED
 	ColumnGap CDATA #IMPLIED
 	ColumnWidths CDATA #IMPLIED">
-<!ENTITY % attsDoc "
+<!ENTITY % attsInfo "
 	Author CDATA #IMPLIED
 	Subject CDATA #IMPLIED
-	Title CDATA #IMPLIED">
+	Title CDATA #IMPLIED
+	Keywords CDATA #IMPLIED
+	Creator CDATA #IMPLIED
+	Producer CDATA #IMPLIED
+	CreationDate CDATA #IMPLIED
+	ModDate CDATA #IMPLIED
+	Trapping CDATA #IMPLIED">
 <!ENTITY % attsList "
 	ListNumbering (None|Disc|Circle|Square|Decimal|UpperRoman|LowerRoman|UpperAlpha|LowerAlpha) 'None'">
 <!ENTITY % attsRuby "
@@ -103,10 +109,10 @@
 <!ATTLIST Div %attsAny; %attsCols;>
 
 <!ELEMENT Document (%Block;|%Hdr;|%Part;|%StructMisc;|Annot|Artifact|DocumentFragment|FENote|LBody|LI|Link|Sub|Title)*>
-<!ATTLIST Document %attsAny; %attsDoc;>
+<!ATTLIST Document %attsAny; %attsInfo;>
 
 <!ELEMENT DocumentFragment (%Hdr;|Annot|Artifact|Aside|Div|Document|DocumentFragment|FENote|Figure|Form|Formula|L|Link|NonStruct|P|Part|Sect|Table|Title)*>
-<!ATTLIST DocumentFragment %attsAny; %attsDoc;>
+<!ATTLIST DocumentFragment %attsAny; %attsInfo;>
 
 <!ELEMENT Em (%Inline;|NonStruct)*>
 <!ATTLIST Em %attsAny; %attsSE;>
